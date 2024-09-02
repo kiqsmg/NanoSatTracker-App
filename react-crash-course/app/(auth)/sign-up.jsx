@@ -1,24 +1,42 @@
 import { useState } from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
-import React from 'react';
+import { View, Text, ScrollView, Image, Alert, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 import {images} from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 
+import {createUser} from '../../lib/appwrite';
+
 const SignUp = () => {
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [form, setForm] = useState({
-    username: '',
-    email: '',
-    password: '',
-  })
-  const [isSubmitting, setSubmitting] = useState(false);
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const submit = () => {
 
-  }
+  const submit = async () => {
+    if (!form.username || !form.email || !form.password) {
+      Alert.alert("Error", "Please fill in all fields");
+    }
+
+    setIsSubmitting(true);
+    try {
+      const result = await createUser(form.email, form.password, form.username);
+
+      router.replace("/home");
+    } catch (error) {
+      Alert.alert("O código tá parando aqui!!!!");
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -31,7 +49,7 @@ const SignUp = () => {
           />
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign up in Aora
+            Sign up to Aora
           </Text>
 
           <FormField 
@@ -41,7 +59,7 @@ const SignUp = () => {
             otherStyles="mt-10"
           />
 
-          <FormField 
+          <FormField
             title="Email"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
@@ -57,7 +75,7 @@ const SignUp = () => {
           />
 
           <CustomButton 
-            title="Sign in"
+            title="Sign up"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
@@ -71,16 +89,13 @@ const SignUp = () => {
               href="/sign-in"
               className="text-lg font-psemibold text-secondary"
             >
-              Sign in
+              Login
             </Link>
           </View>
-
-
         </View>
       </ScrollView>
-
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

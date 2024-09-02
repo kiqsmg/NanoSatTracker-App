@@ -1,29 +1,53 @@
-import { useState } from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, Image, Alert, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 import {images} from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 
+import {signIn} from '../../lib/appwrite';
+
 const SignIn = () => {
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [form, setForm] = useState({
-    email: '',
-    password: '',
-  })
-  const [isSubmitting, setSubmitting] = useState(false);
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const submit = () => {
 
-  }
+  const submit = async () => {
+    if (!form.email || !form.password) {
+      Alert.alert("Error", "Please fill in all fields");
+    }
+
+    setIsSubmitting(true);
+    try {
+      await signIn(form.email, form.password);
+
+      router.replace("/home");
+    } catch (error) {
+      Alert.alert("O código tá parando aqui!!!!");
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full justify-center min-h-[65vh] px-4 my-6">
-        <Image 
+        <View
+          className="w-full flex justify-center h-full px-4 my-6"
+          style={{
+            minHeight: Dimensions.get("window").height - 100,
+          }}
+        >
+          <Image
             source={images.logo}
             resizeMode="contain"
             className="w-[115px] h-[34px]"
@@ -33,7 +57,7 @@ const SignIn = () => {
             Log in to Aora
           </Text>
 
-          <FormField 
+          <FormField
             title="Email"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
@@ -41,15 +65,15 @@ const SignIn = () => {
             keyboardType="email-address"
           />
 
-          <FormField 
+          <FormField
             title="Password"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
           />
 
-          <CustomButton 
-            title="Sign in"
+          <CustomButton
+            title="Sign In"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
@@ -66,13 +90,10 @@ const SignIn = () => {
               Sign up
             </Link>
           </View>
-
-
         </View>
       </ScrollView>
-
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
