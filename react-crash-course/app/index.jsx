@@ -13,8 +13,8 @@ export default function App() {
       <ScrollView contentContainerStyle={{ height: '100%'}}>
         <View className="w-full justify-center items-center min-h-[85px] px-4">
           <Image 
-            source={images.floripasat2}
-            className="w-[200px] h-[300px] mt-10 "
+            source={images.logoSmall}
+            className="w-[200px] h-[300px] mt-5 "
             resizeMode="contain"
           />
 
@@ -24,11 +24,11 @@ export default function App() {
               Making Satellite Data Accessible
             </Text>
 
-            <Image
+            {/*<Image
               source={images.path}
               className="w-[180px] h-[15px] absolute -bottom-2 -right-8"
               resizeMode="contain"
-            />
+            />*/}
           </View>
 
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
