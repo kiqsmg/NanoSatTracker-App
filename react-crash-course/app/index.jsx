@@ -4,8 +4,24 @@ import { Redirect, router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import CustomButton from '../components/CustomButton';
-
 import {images} from '../constants';
+
+import { initializeApp } from '@firebase/app';
+import { getAuth } from '@firebase/auth';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAoOKNkUJOGrx3fXNBJHPtOMWbRu1pJdF0",
+  authDomain: "nanosat-tracker.firebaseapp.com",
+  projectId: "nanosat-tracker",
+  storageBucket: "nanosat-tracker.appspot.com",
+  messagingSenderId: "596863584841",
+  appId: "1:596863584841:web:a2a035d586ef9046508d98",
+  measurementId: "G-TR80Y89WKZ"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app); // Export the auth object for use in other files
 
 export default function App() {
   return (
@@ -20,15 +36,10 @@ export default function App() {
 
           <View className="relative mt-5">
             <Text className="text-2xl text-secondary-400 font-bold text-center">
-            <Text className="text-4xl text-white">NanoSatTracker</Text>{"\n"}
+              <Text className="text-4xl text-white">NanoSatTracker</Text>{"\n"}
               Making Satellite Data Accessible
             </Text>
 
-            {/*<Image
-              source={images.path}
-              className="w-[180px] h-[15px] absolute -bottom-2 -right-8"
-              resizeMode="contain"
-            />*/}
           </View>
 
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">

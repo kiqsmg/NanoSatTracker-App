@@ -3,35 +3,37 @@ import { View, Text, ScrollView, Image, Alert, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, router } from 'expo-router';
 
-import {images} from '../../constants';
+import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 
-//import {signIn} from '../../lib/appwrite';
+import { signInWithEmailAndPassword } from '@firebase/auth';
+import { auth } from '../index.jsx'; // adjust the path as necessary
 
 const SignIn = () => {
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [form, setForm] = useState({
-    username: "",
     email: "",
     password: "",
   });
 
-
   const submit = async () => {
     if (!form.email || !form.password) {
       Alert.alert("Error", "Please fill in all fields");
+      return;
     }
 
     setIsSubmitting(true);
     try {
-      await signIn(form.email, form.password);
+      // Firebase sign-in
+      const userCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
+      const user = userCredential.user;
+      console.log('User signed in:', user);
 
+      // Navigate to home page after successful sign-in
       router.replace("/home");
     } catch (error) {
-      Alert.alert("O código tá parando aqui!!!!");
       Alert.alert("Error", error.message);
     } finally {
       setIsSubmitting(false);
@@ -54,7 +56,7 @@ const SignIn = () => {
           />
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Log in to NanosatTracker
+            Log in to NanoSatTracker
           </Text>
 
           <FormField
@@ -70,6 +72,7 @@ const SignIn = () => {
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
+            secureTextEntry
           />
 
           <CustomButton
