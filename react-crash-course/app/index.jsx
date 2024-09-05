@@ -9,15 +9,7 @@ import {images} from '../constants';
 import { initializeApp } from '@firebase/app';
 import { getAuth } from '@firebase/auth';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAoOKNkUJOGrx3fXNBJHPtOMWbRu1pJdF0",
-  authDomain: "nanosat-tracker.firebaseapp.com",
-  projectId: "nanosat-tracker",
-  storageBucket: "nanosat-tracker.appspot.com",
-  messagingSenderId: "596863584841",
-  appId: "1:596863584841:web:a2a035d586ef9046508d98",
-  measurementId: "G-TR80Y89WKZ"
-};
+import { firebaseConfig } from '../lib/fireabaseConfig.js';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
