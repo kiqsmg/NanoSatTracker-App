@@ -3,9 +3,12 @@ import { View, Text, ScrollView, Image, Alert, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, router } from 'expo-router';
 
-import {images} from '../../constants';
+import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
+
+import { createUserWithEmailAndPassword } from '@firebase/auth'; // Import the correct function
+import { auth } from '../index.jsx'; // adjust the path as necessary
 
 //import {createUser} from '../../lib/appwrite';
 
@@ -23,11 +26,19 @@ const SignUp = () => {
   const submit = async () => {
     if (!form.username || !form.email || !form.password) {
       Alert.alert("Error", "Please fill in all fields");
+      return;
     }
 
     setIsSubmitting(true);
     try {
-      const result = await createUser(form.email, form.password, form.username);
+      // Firebase sign-up (create user)
+      const userCredential = await createUserWithEmailAndPassword( auth, form.email, form.password );
+      const user = userCredential.user;
+      console.log('User created:', user);
+      
+      // You can add additional logic here to store the username if needed.
+
+      // Navigate to home page after successful sign-up
 
       router.replace("/home");
     } catch (error) {
