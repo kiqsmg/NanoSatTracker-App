@@ -1,6 +1,6 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const cubesatBackground = require('../../assets/images/cubesat_background.webp'); // Adjust the path as needed
 
@@ -10,12 +10,12 @@ const FloripaSat1 = () => {
     <SafeAreaView className="bg-primary">
       <ScrollView>
         <View>
-          <ImageBackground source={cubesatBackground} resizeMode="cover" style={styles.image}>
+          <ImageBackground source={cubesatBackground} resizeMode="cover">
             <Text className="text-xl text-blue-500 font-bold">Spacelab- NanosatTracker</Text>
             <Text className="text-blue-300 font-semibold">Spacelab- NanosatTracker</Text>
 
             <TouchableOpacity onPress={() => { /* Handle GitHub link */ }}>
-              <Text style={styles.link}>GitHub</Text>
+              <Text >GitHub</Text>
             </TouchableOpacity>
           </ImageBackground>
         </View>
