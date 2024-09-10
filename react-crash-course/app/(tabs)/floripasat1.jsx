@@ -2,10 +2,12 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackg
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const cubesatBackground = require('../../assets/images/cubesat_background.webp');
 const startsBackground = require('../../assets/images/starts.jpg');
-const floripasat2_img = require('../../assets/images/FloripaSat2.png');
 const floripasat1_img = require('../../assets/images/FloripaSat1.png');
+const eps_img = require('../../assets/images/eps_img.png');
+const obdh_img = require('../../assets/images/obdh_img.png');
+const ttc_img = require('../../assets/images/ttc_img.png');
+
 
 
 const FloripaSat1 = () => {
@@ -16,102 +18,73 @@ const FloripaSat1 = () => {
   return (
     <SafeAreaView className="bg-primary">
       <ScrollView>
-        <View>
-          <ImageBackground source={cubesatBackground} className="h-60">
-            <Text className=" ml-5 mt-5 text-3xl text-blue-100 font-bold">NanosatTracker</Text>
-            <Text className=" ml-5 mt-2 text-blue-300 font-semibold">Spacelab- NanosatTracker</Text>
-
-            <View className=" mt-2 ml-5 w-20 bg-white">
-              <TouchableOpacity onPress={openGitHubLink}>
-                <Text className=" ml-2 mr-2 text-black font-bold">GitHub</Text>
-              </TouchableOpacity>
-            </View>
-          </ImageBackground>
-        </View>
-
-
-        <View className="p-10">
-          <Text className="text-2xl text-blue-500 font-bold">Overview</Text>
-          <Text className="text-lg text-blue-300 font-semibold">SpaceLab brings together several research groups from the Federal University of Santa Catarina (UFSC), Brazil.
-            The different groups conduct research and development activities in space systems in general,
-            aiming to make space more accessible not only to the scientific community but also to the industry.
-            Featured missions include FloripaSat-1, GOLDS-UFSC, GOMX-5, and cubesats from the Catarina Constelation.
-            This organization combines repositories for different projects, files and documents.</Text>      
-        </View>
-
         <ImageBackground source={startsBackground}>
-          <View className="p-5 mb-5">
-            <Text className=" text-2xl text-blue-600 font-bold">FloripaSat-1</Text>
-            <Text className=" mt-2 text-blue-500 font-bold">1U CubeSat</Text>
-
-            <View className="flex-1 justify-center items-center m-5">
-                <Image source={floripasat1_img}
-                className="w-36 h-64" />     
+          <Text className=" mt-5 pl-2 text-center text-3xl text-white font-bold">FloripaSat-1 mission</Text>
+          <View className="flex-1 justify-center items-center m-5">
+            <Image source={floripasat1_img}
+            className="w-40 h-80" />     
+          </View>
+          <View>
+            <View className=" m-5 bg-secondary-700 p-2 rounded-xl">
+              <Text className=" pl-2 text-lg text-blue-300 font-semibold">FloripaSat-1 is a technology demonstration mission entirely developed by SpaceLab UFSC students at the
+              Federal University of Santa Catarina (UFSC), Brazil. It is cube-shaped satellite made of 5 modules.
+                There the core modules for the mission control and the payloads. The core modules developed at UFSC are the
+                On-Board Data Handling (OBDH), the Telemetry, Tracking, and Control (TT&C), the Electric Power System (EPS),
+                  and the passive Attitude Control System (ACS). The payload is an amateur radio repeater, which can be used
+                  all over the globe in emergency and rescue situations, for instance.
+              </Text>
             </View>
+          </View>
 
-            <View className=" bg-secondary-700 p-2 rounded-xl">
-              <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">FloripaSat-1 is a platform with five modules including core components for mission control and payloads,
-              featuring an amateur radio repeater for global emergency and rescue communications.
+          <View>
+            <View className=" m-5 bg-secondary-700 p-2 rounded-xl">
+            <Text className=" ml-2 text-2xl text-blue-600 font-bold">EPS</Text>
+            <Text className=" ml-5 text-lg text-blue-300 font-semibold">Electric Power System</Text>
+            <View className="flex-1 justify-center items-center m-5">
+              <Image source={eps_img}
+              className="w-64 h-64" />     
+            </View>
+            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is designed to capture, store and distribute power to other FloripaSat-1 modules. 
+                  The power capture system is based on the conversion of solar energy through six panels located on 
+                  each face of the satellite structure. The captured energy is stored in two series-connected lithium batteries. 
+                  From decision-making algorithms, the other satellite modules are fed according to the available battery power at
+                   a given time. EPS plays a key role in energy management at different times in orbit, such as when the satellite
+                    is in eclipse, with the earth covering the sun.
+              </Text>
+            </View>
+          </View>
+
+          <View>
+            <View className=" m-5 bg-secondary-700 p-2 rounded-xl">
+            <Text className=" ml-2 text-2xl text-blue-600 font-bold">TT&C</Text>
+            <Text className=" ml-5 text-lg text-blue-300 font-semibold">Telemetry, Tracking and Command</Text>
+            <View className="flex-1 justify-center items-center m-5">
+              <Image source={ttc_img}
+              className="w-64 h-64" />     
+            </View>
+            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is responsible for satellite communication with the terrestrial segment.
+                   It is divided into two sub-modules: “Beacon” and “Main Radio”. “Beacon” transmits periodic signals
+                   containing satellite identification (ID) and basic telemetry information. “Main Radio” is responsible for
+                    receiving remote controls from a control station located on Earth (in this case at the UFSC), and send responses
+                     via telemetry. Received remotes are forwarded to OBDH, which performs decoding and the requested processing.
+              </Text>
+            </View>
+          </View>
+
+          <View>
+            <View className=" m-5 bg-secondary-700 p-2 rounded-xl">
+            <Text className=" ml-2 text-2xl text-blue-600 font-bold">OBDH</Text>
+            <Text className=" ml-5 text-lg text-blue-300 font-semibold">On-Board Data Handling</Text>
+            <View className="flex-1 justify-center items-center m-5">
+              <Image source={obdh_img}
+              className="w-64 h-64" />     
+            </View>
+            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is responsible for synchronizing actions and data flow between satellite modules (eg, EPS, Payloads, …) and the ground segment.
+                    OBDH packs the generated data, and stores it in nonvolatile memory for sending to the ground station as soon as possible (when the satellite is passing over UFSC, or over a partner’s ground station). The remote commands sent by the ground segment are received by TT&C and sent to the OBDH which decodes and performs the necessary actions, sending the actions to the other modules if necessary. This allows communication between the entire satellite and the earth.
               </Text>
             </View>
           </View>
         </ImageBackground>
-
-
-        <ImageBackground source={startsBackground}>
-          <View className="p-5 mb-5">
-            <Text className=" text-2xl text-blue-600 font-bold">GOLDS-UFSC</Text>
-            <Text className=" mt-2 text-blue-500 font-bold">2U CubeSat</Text>
-
-            <View className="flex-1 justify-center items-center m-5">
-                <Image source={floripasat2_img}
-                className="w-36 h-64" />     
-            </View>
-
-            <View className=" bg-secondary-700 p-2 rounded-xl">
-              <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">GOLDS-UFSC is a service module for INPE’s EDC payload, and also a platform for the test of core spacecraft
-              technologies in a microgravity, high-radiation and low Earth orbit environment.
-              </Text>
-            </View>
-          </View>
-        </ImageBackground>
-
-        <ImageBackground source={startsBackground}>
-          <View className="p-5 mb-5">
-            <Text className=" text-2xl text-blue-600 font-bold">Catarina A1</Text>
-            <Text className=" mt-2 text-blue-500 font-bold">2U CubeSat</Text>
-
-            <View className="flex-1 justify-center items-center m-5">
-                <Image source={floripasat2_img}
-                className="w-36 h-64" />     
-            </View>
-
-            <View className=" bg-secondary-700 p-2 rounded-xl">
-              <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">The Catarina Constellation encompasses a set of satellites with the goal to provide services, mainly, to the civil defence, contributing to the country’s sustainable socioeconomic development agenda.
-              </Text>
-            </View>
-          </View>
-        </ImageBackground>
-
-        <ImageBackground source={startsBackground}>
-          <View className="p-5 mb-5">
-            <Text className=" text-2xl text-blue-600 font-bold">Catarina A3</Text>
-            <Text className=" mt-2 text-blue-500 font-bold">2U CubeSat</Text>
-
-            <View className="flex-1 justify-center items-center m-5">
-                <Image source={floripasat2_img}
-                className="w-36 h-64" />     
-            </View>
-
-            <View className=" bg-secondary-700 p-2 rounded-xl">
-              <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">The Catarina Constellation encompasses a set of satellites with the goal to provide services, mainly, to the civil defence, contributing to the country’s sustainable socioeconomic development agenda.
-              </Text>
-            </View>
-          </View>
-        </ImageBackground>
-        
-
-        
 
       </ScrollView>
     </SafeAreaView>
