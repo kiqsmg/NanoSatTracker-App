@@ -14,7 +14,7 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary">
+    <SafeAreaView className="bg-black">
       <ScrollView>
         <View>
           <ImageBackground source={cubesatBackground} className="h-60">
@@ -33,7 +33,7 @@ const Home = () => {
             This organization combines repositories for different projects, files and documents.</Text>     
 
             <TouchableOpacity onPress={openGitHubLink}>
-                <Text className="mt-2 mr-2 text-white text-center pt-2 pb-2 bg-black font-bold">GitHub</Text>
+                <Text className="mt-2 mr-2 text-black text-center pt-2 pb-2 bg-white font-bold">GitHub</Text>
             </TouchableOpacity> 
         </View>
 
