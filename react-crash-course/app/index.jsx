@@ -1,19 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Image, ScrollView } from 'react-native';
-import { Redirect, router } from 'expo-router';
+import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import CustomButton from '../components/CustomButton';
 import {images} from '../constants';
 
-import { initializeApp } from '@firebase/app';
-import { getAuth } from '@firebase/auth';
-
-import { firebaseConfig } from '../lib/fireabaseConfig.js';
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app); // Export the auth object for use in other files
 
 export default function App() {
   return (
@@ -31,7 +23,6 @@ export default function App() {
               <Text className="text-4xl text-white">NanoSatTracker</Text>{"\n"}
               Making Satellite Data Accessible
             </Text>
-
           </View>
 
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
