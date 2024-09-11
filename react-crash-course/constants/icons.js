@@ -1,6 +1,7 @@
-import bookmark from "../assets/icons/bookmark.png";
+import satellite from "../assets/icons/satellite.png";
 import home from "../assets/icons/home.png";
-import plus from "../assets/icons/plus.png";
+import chart_1 from "../assets/icons/chart_1.png";
+import chart_2 from "../assets/icons/chart_2.png";
 import profile from "../assets/icons/profile.png";
 import leftArrow from "../assets/icons/left-arrow.png";
 import menu from "../assets/icons/menu.png";
@@ -14,9 +15,10 @@ import play from "../assets/icons/play.png";
 
 export default {
   play,
-  bookmark,
+  satellite,
   home,
-  plus,
+  chart_1,
+  chart_2,
   profile,
   leftArrow,
   menu,
