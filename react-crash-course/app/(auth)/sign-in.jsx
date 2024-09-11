@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Image, Alert, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, router } from 'expo-router';
@@ -8,7 +8,9 @@ import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 
 import { signInWithEmailAndPassword } from '@firebase/auth';
-import { auth } from '../index.jsx'; // adjust the path as necessary
+import { auth } from '../../lib/fireabaseConfig.js';
+
+import { useGlobalContext } from '../../context/GlobalProvider.js'
 
 const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -17,6 +19,15 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+
+  const { isLogged, setIsLogged, setUser } = useGlobalContext();
+
+  // Redireciona para a home se o usuário já estiver logado
+  useEffect(() => {
+    if (isLogged) {
+      router.replace('/home');
+    }
+  }, [isLogged]);
 
   const submit = async () => {
     if (!form.email || !form.password) {
@@ -30,6 +41,10 @@ const SignIn = () => {
       const userCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
       const user = userCredential.user;
       console.log('User signed in:', user);
+
+      // Atualiza o estado global com os dados do usuário
+      setUser(user);
+      setIsLogged(true);
 
       // Navigate to home page after successful sign-in
       router.replace("/home");

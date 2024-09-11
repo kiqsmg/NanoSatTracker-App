@@ -2,13 +2,18 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackg
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useGlobalContext } from '../../context/GlobalProvider.js';
+
 const cubesatBackground = require('../../assets/images/cubesat_background.webp');
-const startsBackground = require('../../assets/images/starts.jpg');
 const floripasat2_img = require('../../assets/images/FloripaSat2.png');
 const floripasat1_img = require('../../assets/images/FloripaSat1.png');
 
 
 const Home = () => {
+
+  const { logout } = useGlobalContext();
+
+
   const openGitHubLink = () => {
     Linking.openURL('https://github.com/spacelab-ufsc');
   };
@@ -98,9 +103,12 @@ const Home = () => {
             </Text>
           </View>
         </View>
-        
 
-        
+        <View className="p-5 mb-5">
+          <TouchableOpacity onPress={logout} className="bg-red-500 p-2 rounded-xl">
+            <Text className="text-white text-lg font-bold text-center">Logout</Text>
+          </TouchableOpacity>
+        </View>        
 
       </ScrollView>
     </SafeAreaView>

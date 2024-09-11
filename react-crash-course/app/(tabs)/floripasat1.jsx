@@ -2,7 +2,6 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackg
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const startsBackground = require('../../assets/images/starts.jpg');
 const floripasat1_img = require('../../assets/images/FloripaSat1.png');
 const eps_img = require('../../assets/images/eps_img.png');
 const obdh_img = require('../../assets/images/obdh_img.png');
@@ -11,9 +10,6 @@ const ttc_img = require('../../assets/images/ttc_img.png');
 
 
 const FloripaSat1 = () => {
-  const openGitHubLink = () => {
-    Linking.openURL('https://github.com/spacelab-ufsc');
-  };
 
   return (
     <SafeAreaView className="bg-black">

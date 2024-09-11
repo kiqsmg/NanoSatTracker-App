@@ -24,7 +24,7 @@ const TabsLayout = () => {
     <>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "#FFA001",
+          tabBarActiveTintColor: "#1b46bb",
           tabBarInactiveTintColor: "#CDCDE0",
           tabBarShowLabel: false,
           tabBarStyle: {
@@ -58,7 +58,7 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
-                icon={icons.bookmark}
+                icon={icons.satellite}
                 color={color}
                 name="Floripasat1"
                 focused={focused}
@@ -74,7 +74,7 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
-                icon={icons.plus}
+                icon={icons.chart_1}
                 color={color}
                 name="Create"
                 focused={focused}
@@ -84,21 +84,21 @@ const TabsLayout = () => {
         />
 
         <Tabs.Screen 
-          name="profile"
+          name="battery"
           options={{
-            title: 'Profile',
+            title: 'Battery',
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
-                icon={icons.profile}
+                icon={icons.chart_2}
                 color={color}
-                name="Profile"
+                name="Battery"
                 focused={focused}
               />
             )
           }}
         />
-        
+
       </Tabs>
     </>
   )

@@ -8,9 +8,8 @@ import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 
 import { createUserWithEmailAndPassword } from '@firebase/auth'; // Import the correct function
-import { auth } from '../index.jsx'; // adjust the path as necessary
+import { auth } from '../../lib/fireabaseConfig.js';
 
-//import {createUser} from '../../lib/appwrite';
 
 const SignUp = () => {
 
