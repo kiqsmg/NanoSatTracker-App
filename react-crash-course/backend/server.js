@@ -178,7 +178,7 @@ const FloripaSatSchema = new mongoose.Schema(
 const FloripaSat1Overall = mongoose.model("Floripasats", FloripaSatSchema);
 
 // Rota para buscar dados do Floripasat
-app.get('/Floripasats', async (req, res) => {
+app.get('/floripasats', async (req, res) => {
   try {
     const data = await FloripaSat1Overall.find(); // Obtém todos os dados
     res.json(data);
