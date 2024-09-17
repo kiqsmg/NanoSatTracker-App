@@ -1,37 +1,143 @@
-import React from 'react'
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { LineChart } from "react-native-gifted-charts";
 
-
 const Create = () => {
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
 
-  const lineData = [{value: 0},{value: 10},{value: 8},{value: 58},{value: 56},{value: 78},{value: 74},{value: 98}];
-  const lineData2 = [{value: 0},{value: 20},{value: 18},{value: 40},{value: 36},{value: 60},{value: 54},{value: 85}];
-  
+  const lineData1 = [
+    {value: 4, label: '1 Jan'},
+    {value: 14, label: '10 Jan'},
+    {value: 8, label: '20 Jan'},
+    {value: 38, label: '30 Jan'},
+    {value: 36, label: '1 Feb'},
+    {value: 28, label: '10 Feb'},
+    {value: 14, label: '20 Feb'},
+    {value: 28, label: '28 Feb'},
+    {value: 4, label: '1 Mar'},
+    {value: 14, label: '10 Mar'},
+    {value: 8, label: '20 Mar'},
+    {value: 14, label: '30 Mar'},
+    {value: 8, label: '1 Apr'},
+    {value: 38, label: '10 Apr'},
+    {value: 14, label: '20 Apr'},
+    {value: 28, label: '30 Apr'},
+    {value: 4, label: '1 May'},
+    {value: 10, label: '10 May'},
+    {value: 8, label: '20 May'},
+    {value: 14, label: '30 May'},
+    {value: 8, label: '1 Jun'},
+    {value: 38, label: '10 Jun'},
+    {value: 14, label: '20 Jun'},
+    {value: 28, label: '30 Jun'},
+    {value: 4, label: '1 Jul'},
+    {value: 28, label: '10 Jul'},
+    {value: 4, label: '20 Jul'},
+    {value: 14, label: '30 Jul'},
+  ];
+
+  const lineData2 = [
+    {value: 4, label: '1 Jan'},
+    {value: 14, label: '10 Jan'},
+    {value: 8, label: '20 Jan'},
+    {value: 38, label: '30 Jan'},
+    {value: 36, label: '1 Feb'},
+    {value: 28, label: '10 Feb'},
+    {value: 14, label: '20 Feb'},
+    {value: 28, label: '28 Feb'},
+    {value: 4, label: '1 Mar'},
+    {value: 14, label: '10 Mar'},
+    {value: 8, label: '20 Mar'},
+    {value: 14, label: '30 Mar'},
+    {value: 8, label: '1 Apr'},
+    {value: 38, label: '10 Apr'},
+    {value: 14, label: '20 Apr'},
+    {value: 28, label: '30 Apr'},
+    {value: 4, label: '1 May'},
+    {value: 10, label: '10 May'},
+    {value: 8, label: '20 May'},
+    {value: 14, label: '30 May'},
+    {value: 8, label: '1 Jun'},
+    {value: 38, label: '10 Jun'},
+    {value: 14, label: '20 Jun'},
+    {value: 28, label: '30 Jun'},
+    {value: 4, label: '1 Jul'},
+    {value: 28, label: '10 Jul'},
+    {value: 4, label: '20 Jul'},
+    {value: 14, label: '30 Jul'},
+  ];
+
+  const months1 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const months2 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+
+  const showOrHidePointer1 = (index) => {
+    ref1.current?.scrollTo({
+      x: index * 200 - 25, // Adjust according to your UI
+    });
+  };
+
+  const showOrHidePointer2 = (index) => {
+    ref2.current?.scrollTo({
+      x: index * 200 - 25, // Adjust according to your UI
+    });
+  };
+
   return (
-      <View>
-        <LineChart
-        areaChart
+    <View>
+      {/* First chart and month selection */}
+      <View style={{ flexDirection: 'row', marginLeft: 8 }}>
+        {months1.map((month, index) => (
+          <TouchableOpacity
+            key={index}
+            style={{
+              padding: 6,
+              margin: 4,
+              backgroundColor: '#ebb',
+              borderRadius: 8,
+            }}
+            onPress={() => showOrHidePointer1(index)}
+          >
+            <Text>{month}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <LineChart
+        scrollRef={ref1}
+        data={lineData1}
         curved
-        data={lineData}
-        data2={lineData2}
-        height={250}
-        showVerticalLines
-        spacing={44}
         initialSpacing={0}
-        color1="skyblue"
-        color2="orange"
-        textColor1="green"
-        hideDataPoints
-        dataPointsColor1="blue"
-        dataPointsColor2="red"
-        startFillColor1="skyblue"
-        startFillColor2="orange"
-        startOpacity={0.8}
-        endOpacity={0.3}
-        />
+        rotateLabel
+      />
+
+      {/* Second chart and month selection */}
+      <View style={{ flexDirection: 'row', marginLeft: 8, marginTop: 50 }}>
+        {months2.map((month, index) => (
+          <TouchableOpacity
+            key={index}
+            style={{
+              padding: 6,
+              margin: 4,
+              backgroundColor: '#ebb',
+              borderRadius: 8,
+            }}
+            onPress={() => showOrHidePointer2(index)}
+          >
+            <Text>{month}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <LineChart
+        scrollRef={ref2}
+        data={lineData2}
+        curved
+        initialSpacing={0}
+        rotateLabel
+      />
     </View>
   );
-}
+};
 
-export default Create
+export default Create;
