@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
-import axios from 'axios';
+
+import { useGetDownlinkQuery } from "../../state/api"; // Assuming you're using RTK Query
 
 const Battery = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Using RTK Query hook to fetch the downlink data
+  const { data = [], error, isLoading } = useGetDownlinkQuery();
 
-  useEffect(() => {
-    // Função para buscar os dados do backend
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://200.135.85.227/floripasat1/downlink');
-        console.log(response.data); // Verifique os dados no console
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setError('Error fetching data');
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchData();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <ActivityIndicator size="large" style={styles.loader} />;
   }
 
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.errorText}>Error fetching data</Text>
       </View>
     );
   }
@@ -50,7 +33,7 @@ const Battery = () => {
             <Text>Year: {item.year}</Text>
             <Text>Battery Voltage 1: {item.battery_cell_1_voltage}V</Text>
             <Text>Battery Voltage 2: {item.battery_cell_2_voltage}V</Text>
-            {/* Exiba outros campos conforme necessário */}
+            {/* Display other fields as necessary */}
           </View>
         )}
       />
