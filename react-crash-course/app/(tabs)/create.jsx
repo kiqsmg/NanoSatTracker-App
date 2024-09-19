@@ -25,9 +25,16 @@ const Create = () => {
     });
   };
 
+
+  ///////////////////////////////              QUAL A DIFERENÇA ENTRE USAR CLASSNAME={}       E UTILIZAR STYLE={{}}
   return (
     <ScrollView>
-      <View>
+      <View className="mt-10">
+        <View className="mb-5">
+          <Text className="text-2xl text-secondary-400 font-bold text-center">
+            Solar Panels chart:
+          </Text>
+        </View>
         {/* First chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 5,}}>
           {months1.map((month, index) => (
@@ -55,11 +62,9 @@ const Create = () => {
           curved
           color1="skyblue"
           color2="orange"
+          color3="red"
+          color4='green'
           initialSpacing={20}
-          dataPointsColor1="blue"
-          dataPointsColor2="red"
-          startFillColor1="skyblue"
-          startFillColor2="orange"
           maxValue={0.6} // Valor máximo no eixo Y
           rotateLabel
         />
