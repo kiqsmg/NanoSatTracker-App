@@ -971,12 +971,22 @@ const received_Data = [
     },    
 ];
 
-export const lineData1_filtered = received_Data.map(item => ({
-    value: item.battery_cell_1_voltage,
+export const line_sp_01_current = received_Data.map(item => ({
+    value: item.sp_01_current,
     label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
   }));
 
-export const lineData2_filtered = received_Data.map(item => ({
-    value: item.battery_cell_2_voltage,
+export const line_sp_02_current = received_Data.map(item => ({
+    value: item.sp_02_current,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+}));
+
+export const line_sp_03_current = received_Data.map(item => ({
+    value: item.sp_03_current,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+}));
+
+export const line_sp_04_current = received_Data.map(item => ({
+    value: item.sp_04_current,
     label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
 }));
