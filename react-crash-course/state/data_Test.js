@@ -990,3 +990,21 @@ export const line_sp_04_current = received_Data.map(item => ({
     value: item.sp_04_current,
     label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
 }));
+
+export const line_sp_05_current = received_Data.map(item => ({
+    value: item.sp_05_current,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+}));
+
+export const line_sp_06_current = received_Data.map(item => ({
+    value: item.sp_06_current,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+}));
+
+/*
+        sp_01_02_voltage: 4.30408,
+        sp_03_04_voltage: 1.23311,
+        sp_05_06_voltage: 3.69696,
+
+*/
+

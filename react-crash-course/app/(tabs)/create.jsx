@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { LineChart } from "react-native-gifted-charts";
 
-import { line_sp_01_current, line_sp_02_current, line_sp_03_current, line_sp_04_current } from '../../state/data_Test';
+import { line_sp_01_current, line_sp_02_current, line_sp_03_current, line_sp_04_current, line_sp_05_current, line_sp_06_current } from '../../state/data_Test';
 
 const Create = () => {
   const ref1 = useRef(null);
@@ -15,6 +15,10 @@ const Create = () => {
   const lineData3 = line_sp_03_current
 
   const lineData4 = line_sp_04_current
+  
+  const lineData5 = line_sp_05_current
+
+  const lineData6 = line_sp_06_current
 
   const months1 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
 
@@ -59,11 +63,15 @@ const Create = () => {
           data2={lineData2}
           data3={lineData3}
           data4={lineData4}
+          data5={lineData5}
+          data6={lineData6}
           curved
           color1="skyblue"
           color2="orange"
           color3="red"
           color4='green'
+          color5="yellow"
+          color6="pink"
           initialSpacing={20}
           maxValue={0.6} // Valor máximo no eixo Y
           yAxisOffset={-0.05}
