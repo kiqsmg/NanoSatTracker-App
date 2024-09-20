@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { LineChart } from "react-native-gifted-charts";
 
-import { line_sp_01_current, line_sp_02_current, line_sp_03_current, line_sp_04_current, line_sp_05_current, line_sp_06_current } from '../../state/data_Test';
+import { line_sp_01_current, line_sp_02_current, line_sp_03_current, line_sp_04_current, line_sp_05_current, line_sp_06_current, line_sp_01_02_voltage, line_sp_03_04_voltage, line_sp_05_06_voltage } from '../../state/data_Test';
 
 const Create = () => {
   const ref1 = useRef(null);
@@ -20,6 +20,13 @@ const Create = () => {
 
   const lineData6 = line_sp_06_current
 
+  const lineData7 = line_sp_01_02_voltage
+
+  const lineData8 = line_sp_03_04_voltage
+
+  const lineData9 = line_sp_05_06_voltage
+
+
   const months1 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
 
 
@@ -36,10 +43,11 @@ const Create = () => {
       <View className="mt-10 ml-4">
         <View className="mb-5 mt-10">
           <Text className="text-2xl text-secondary-400 font-bold text-center">
-            Solar Panels chart:
+            Solar Panels current:
           </Text>
-        </View>
-        {/* First chart and month selection */}
+
+
+                  {/* First chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
           {months1.map((month, index) => (
             <TouchableOpacity
@@ -76,17 +84,18 @@ const Create = () => {
           maxValue={0.6} // Valor máximo no eixo Y
           yAxisOffset={-0.05}
           rotateLabel
-          noOfSections={5}
+          noOfSections={6}
           xAxisLabelsVerticalShift={15}
         />
-
-
-<View className="mb-5  mt-10">
-          <Text className="text-2xl text-secondary-400 font-bold text-center">
-            Solar Panels chart:
-          </Text>
         </View>
-        {/* First chart and month selection */}
+
+        <View className="mb-5 mt-10">
+          <Text className="text-2xl text-secondary-400 font-bold text-center">
+            Solar Panels voltage:
+          </Text>
+
+
+                  {/* First chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
           {months1.map((month, index) => (
             <TouchableOpacity
@@ -106,20 +115,26 @@ const Create = () => {
 
         <LineChart
           scrollRef={ref1}
-          data={lineData1}
-          data2={lineData2}
-          data3={lineData3}
-          data4={lineData4}
+          data={lineData7}
+          data2={lineData8}
+          data3={lineData9}
           curved
           color1="skyblue"
           color2="orange"
           color3="red"
           color4='green'
+          color5="yellow"
+          color6="pink"
           initialSpacing={20}
-          maxValue={0.6} // Valor máximo no eixo Y
+          maxValue={6} // Valor máximo no eixo Y
+          yAxisOffset={-0.05}
           rotateLabel
+          noOfSections={6}
+          xAxisLabelsVerticalShift={15}
         />
-        
+        </View>
+
+
       </View>
     </ScrollView>
     
