@@ -1,80 +1,154 @@
-import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { LineChart } from "react-native-gifted-charts";
 
-import { useGetDownlinkQuery } from "../../state/api"; // Assuming you're using RTK Query
+import { line_battery_cell_1_voltage, line_battery_cell_2_voltage, line_battery_charge, line_battery_current, line_battery_temperature} from '../../state/data_Test';
+
 
 const Battery = () => {
-  // Using RTK Query hook to fetch the downlink data
-  const { data = [], error, isLoading } = useGetDownlinkQuery();
+  
+  const lineData1 = line_battery_cell_1_voltage
+
+  const lineData2 = line_battery_cell_2_voltage
+
+  const lineData3 = line_battery_charge
+
+  const lineData4 = line_battery_current
+
+  const lineData5 = line_battery_temperature
 
 
-  if (isLoading) {
-    return <ActivityIndicator size="large" style={styles.loader} />;
-  }
+  const months1 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
 
-  if (error) {
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Error fetching data</Text>
-      </View>
-    );
-  }
+  const showOrHidePointer1 = (index) => {
+    ref1.current?.scrollTo({
+      x: index * 200 - 25, //Adjust according to your UI
+    });
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Battery Data</Text>
+    <ScrollView>
+      <View className="mt-10 ml-4">
+      <View className="mb-5 mt-10">
+          <Text className="text-2xl text-secondary-400 font-bold text-center">
+            Batteries voltage:
+          </Text>
 
-      <FlatList
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text>Name: {item.name}</Text>
-            <Text>Year: {item.year}</Text>
-            <Text>Battery Voltage 1: {item.battery_cell_1_voltage}V</Text>
-            <Text>Battery Voltage 2: {item.battery_cell_2_voltage}V</Text>
-            {/* Display other fields as necessary */}
-          </View>
-        )}
-      />
-    </View>
+
+                  {/* First chart and month selection */}
+        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
+          {months1.map((month, index) => (
+            <TouchableOpacity
+              key={index}
+              style={{
+                padding: 6,
+                margin: 4,
+                backgroundColor: '#86abe1',
+                borderRadius: 8,
+              }}
+              onPress={() => showOrHidePointer1(index)}
+            >
+              <Text>{month}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <LineChart
+          scrollRef={ref1}
+          data={lineData1}
+          data2={lineData2}
+          curved
+          color1="skyblue"
+          color2="orange"
+          initialSpacing={20}
+          maxValue={0.6} // Valor máximo no eixo Y
+          yAxisOffset={-0.05}
+          rotateLabel
+          noOfSections={6}
+          xAxisLabelsVerticalShift={15}
+        />
+      </View>
+
+      <View className="mb-5 mt-10">
+          <Text className="text-2xl text-secondary-400 font-bold text-center">
+            Batteries charge & current:
+          </Text>
+
+
+                  {/* First chart and month selection */}
+        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
+          {months1.map((month, index) => (
+            <TouchableOpacity
+              key={index}
+              style={{
+                padding: 6,
+                margin: 4,
+                backgroundColor: '#86abe1',
+                borderRadius: 8,
+              }}
+              onPress={() => showOrHidePointer1(index)}
+            >
+              <Text>{month}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <LineChart
+          scrollRef={ref1}
+          data={lineData3}
+          data2={lineData4}
+          curved
+          color1="skyblue"
+          color2="orange"
+          initialSpacing={20}
+          maxValue={0.6} // Valor máximo no eixo Y
+          yAxisOffset={-0.05}
+          rotateLabel
+          noOfSections={6}
+          xAxisLabelsVerticalShift={15}
+        />
+      </View>
+
+      <View className="mb-5 mt-10">
+          <Text className="text-2xl text-secondary-400 font-bold text-center">
+            Batteries temperature:
+          </Text>
+
+
+                  {/* First chart and month selection */}
+        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
+          {months1.map((month, index) => (
+            <TouchableOpacity
+              key={index}
+              style={{
+                padding: 6,
+                margin: 4,
+                backgroundColor: '#86abe1',
+                borderRadius: 8,
+              }}
+              onPress={() => showOrHidePointer1(index)}
+            >
+              <Text>{month}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <LineChart
+          scrollRef={ref1}
+          data={lineData5}
+          curve
+          color1="skyblue"
+          initialSpacing={20}
+          maxValue={0.6} // Valor máximo no eixo Y
+          yAxisOffset={-0.05}
+          rotateLabel
+          noOfSections={6}
+          xAxisLabelsVerticalShift={15}
+        />
+      </View>
+
+      </View>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#f0f0f0',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  item: {
-    backgroundColor: '#fff',
-    padding: 16,
-    marginVertical: 8,
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  loader: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 18,
-  },
-});
-
 export default Battery;
