@@ -971,6 +971,9 @@ const received_Data = [
     },    
 ];
 
+
+
+//----------------------------------- Solar Panel data -----------------------------------
 export const line_sp_01_current = received_Data.map(item => ({
     value: item.sp_01_current,
     label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
@@ -1002,7 +1005,6 @@ export const line_sp_06_current = received_Data.map(item => ({
 }));
 
 
-
 export const line_sp_01_02_voltage = received_Data.map(item => ({
     value: item.sp_01_02_voltage,
     label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
@@ -1018,3 +1020,31 @@ export const line_sp_05_06_voltage = received_Data.map(item => ({
     label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
 }));
 
+
+//----------------------------------- Battery data -----------------------------------
+
+
+export const line_battery_cell_1_voltage = received_Data.map(item => ({
+    value: item.battery_cell_1_voltage,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+}));
+
+export const line_battery_cell_2_voltage = received_Data.map(item => ({
+    value: item.battery_cell_2_voltage,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+}));
+
+export const line_battery_temperature = received_Data.map(item => ({
+    value: item.battery_temperature,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+}));
+
+export const line_battery_charge = received_Data.map(item => ({
+    value: item.battery_charge,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+}));
+
+export const line_battery_current = received_Data.map(item => ({
+    value: item.battery_current,
+    label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+}));
