@@ -6,6 +6,8 @@ import { line_sp_01_current, line_sp_02_current, line_sp_03_current, line_sp_04_
 
 const Create = () => {
   const ref1 = useRef(null);
+  const ref2 = useRef(null);
+
 
 
   const lineData1 = line_sp_01_current
@@ -27,11 +29,15 @@ const Create = () => {
   const lineData9 = line_sp_05_06_voltage
 
 
-  const months1 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
-
+  const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
 
   const showOrHidePointer1 = (index) => {
     ref1.current?.scrollTo({
+      x: index * 200 - 25, // Adjust according to your UI
+    });
+  };
+  const showOrHidePointer2 = (index) => {
+    ref2.current?.scrollTo({
       x: index * 200 - 25, // Adjust according to your UI
     });
   };
@@ -49,7 +55,7 @@ const Create = () => {
 
                   {/* First chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
-          {months1.map((month, index) => (
+          {month.map((month, index) => (
             <TouchableOpacity
               key={index}
               style={{
@@ -95,9 +101,9 @@ const Create = () => {
           </Text>
 
 
-                  {/* First chart and month selection */}
+                  {/* Second chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
-          {months1.map((month, index) => (
+          {month.map((month, index) => (
             <TouchableOpacity
               key={index}
               style={{
@@ -106,7 +112,7 @@ const Create = () => {
                 backgroundColor: '#86abe1',
                 borderRadius: 8,
               }}
-              onPress={() => showOrHidePointer1(index)}
+              onPress={() => showOrHidePointer2(index)}
             >
               <Text>{month}</Text>
             </TouchableOpacity>
@@ -114,7 +120,7 @@ const Create = () => {
         </View>
 
         <LineChart
-          scrollRef={ref1}
+          scrollRef={ref2}
           data={lineData7}
           data2={lineData8}
           data3={lineData9}

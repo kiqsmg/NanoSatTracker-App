@@ -56,7 +56,7 @@ const Battery = () => {
 
 
                   {/* First chart and month selection */}
-        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10, marginTop: 10,}}>
+        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,  marginTop: 10,}}>
           {month.map((month, index1) => (
             <TouchableOpacity
               key={index1}
@@ -102,7 +102,7 @@ const Battery = () => {
 
 
                   {/* Second chart and month selection */}
-        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
+        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,  marginTop: 10,}}>
           {month.map((month, index2) => (
             <TouchableOpacity
               key={index2}
@@ -145,7 +145,7 @@ const Battery = () => {
 
 
                   {/* Third chart and month selection */}
-        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
+        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,  marginTop: 10,}}>
           {month.map((month, index3) => (
             <TouchableOpacity
               key={index3}
