@@ -22,9 +22,7 @@ const Battery = () => {
   const lineData5 = line_battery_temperature
 
 
-  const months1 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
-  const months2 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
-  const months3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
 
   const showOrHidePointer1 = (index) => {
     ref1.current?.scrollTo({
@@ -32,12 +30,12 @@ const Battery = () => {
     });
   };
   const showOrHidePointer2 = (index) => {
-    ref1.current?.scrollTo({
+    ref2.current?.scrollTo({
       x: index * 200 - 25, //Adjust according to your UI
     });
   };
   const showOrHidePointer3 = (index) => {
-    ref1.current?.scrollTo({
+    ref3.current?.scrollTo({
       x: index * 200 - 25, //Adjust according to your UI
     });
   };
@@ -46,23 +44,29 @@ const Battery = () => {
     <ScrollView>
       <View className="mt-10 ml-4">
       <View className="mb-5 mt-10">
-          <Text className="text-2xl text-secondary-400 font-bold text-center">
+          <Text className="text-2xl text-secondary-400 font-bold text-center mb-5">
             Batteries voltage:
+          </Text>
+          <Text className=" text-secondary-600 font-bold">
+            Cell 01 voltage [V]: blue
+          </Text>
+          <Text className=" text-secondary-600 font-bold">
+            Cell 02 voltage [V]: orange
           </Text>
 
 
                   {/* First chart and month selection */}
-        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
-          {months1.map((month, index) => (
+        <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10, marginTop: 10,}}>
+          {month.map((month, index1) => (
             <TouchableOpacity
-              key={index}
+              key={index1}
               style={{
                 padding: 6,
                 margin: 4,
                 backgroundColor: '#86abe1',
                 borderRadius: 8,
               }}
-              onPress={() => showOrHidePointer1(index)}
+              onPress={() => showOrHidePointer1(index1)}
             >
               <Text>{month}</Text>
             </TouchableOpacity>
@@ -86,23 +90,29 @@ const Battery = () => {
       </View>
 
       <View className="mb-5 mt-10">
-          <Text className="text-2xl text-secondary-400 font-bold text-center">
+          <Text className="text-2xl text-secondary-400 font-bold text-center mb-5">
             Batteries charge & current:
+          </Text>
+          <Text className=" text-secondary-600 font-bold">
+            Charge: blue
+          </Text>
+          <Text className=" text-secondary-600 font-bold">
+            Current [A]: orange
           </Text>
 
 
                   {/* Second chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
-          {months2.map((month, index) => (
+          {month.map((month, index2) => (
             <TouchableOpacity
-              key={index}
+              key={index2}
               style={{
                 padding: 6,
                 margin: 4,
                 backgroundColor: '#86abe1',
                 borderRadius: 8,
               }}
-              onPress={() => showOrHidePointer2(index)}
+              onPress={() => showOrHidePointer2(index2)}
             >
               <Text>{month}</Text>
             </TouchableOpacity>
@@ -126,23 +136,26 @@ const Battery = () => {
       </View>
 
       <View className="mb-5 mt-10">
-          <Text className="text-2xl text-secondary-400 font-bold text-center">
+          <Text className="text-2xl text-secondary-400 font-bold text-center mb-5">
             Batteries temperature:
+          </Text>
+          <Text className=" text-secondary-600 font-bold">
+            Temperature [ºC]: blue
           </Text>
 
 
                   {/* Third chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
-          {months3.map((month, index) => (
+          {month.map((month, index3) => (
             <TouchableOpacity
-              key={index}
+              key={index3}
               style={{
                 padding: 6,
                 margin: 4,
                 backgroundColor: '#86abe1',
                 borderRadius: 8,
               }}
-              onPress={() => showOrHidePointer3(index)}
+              onPress={() => showOrHidePointer3(index3)}
             >
               <Text>{month}</Text>
             </TouchableOpacity>
