@@ -6,6 +6,10 @@ import { line_battery_cell_1_voltage, line_battery_cell_2_voltage, line_battery_
 
 
 const Battery = () => {
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+
   
   const lineData1 = line_battery_cell_1_voltage
 
@@ -19,8 +23,20 @@ const Battery = () => {
 
 
   const months1 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const months2 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const months3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
 
   const showOrHidePointer1 = (index) => {
+    ref1.current?.scrollTo({
+      x: index * 200 - 25, //Adjust according to your UI
+    });
+  };
+  const showOrHidePointer2 = (index) => {
+    ref1.current?.scrollTo({
+      x: index * 200 - 25, //Adjust according to your UI
+    });
+  };
+  const showOrHidePointer3 = (index) => {
     ref1.current?.scrollTo({
       x: index * 200 - 25, //Adjust according to your UI
     });
@@ -61,8 +77,8 @@ const Battery = () => {
           color1="skyblue"
           color2="orange"
           initialSpacing={20}
-          maxValue={0.6} // Valor máximo no eixo Y
-          yAxisOffset={-0.05}
+          maxValue={1}
+          yAxisOffset={3.5}
           rotateLabel
           noOfSections={6}
           xAxisLabelsVerticalShift={15}
@@ -75,9 +91,9 @@ const Battery = () => {
           </Text>
 
 
-                  {/* First chart and month selection */}
+                  {/* Second chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
-          {months1.map((month, index) => (
+          {months2.map((month, index) => (
             <TouchableOpacity
               key={index}
               style={{
@@ -86,7 +102,7 @@ const Battery = () => {
                 backgroundColor: '#86abe1',
                 borderRadius: 8,
               }}
-              onPress={() => showOrHidePointer1(index)}
+              onPress={() => showOrHidePointer2(index)}
             >
               <Text>{month}</Text>
             </TouchableOpacity>
@@ -94,15 +110,15 @@ const Battery = () => {
         </View>
 
         <LineChart
-          scrollRef={ref1}
+          scrollRef={ref2}
           data={lineData3}
           data2={lineData4}
           curved
           color1="skyblue"
           color2="orange"
           initialSpacing={20}
-          maxValue={0.6} // Valor máximo no eixo Y
-          yAxisOffset={-0.05}
+          maxValue={22}
+          yAxisOffset={-1}
           rotateLabel
           noOfSections={6}
           xAxisLabelsVerticalShift={15}
@@ -115,9 +131,9 @@ const Battery = () => {
           </Text>
 
 
-                  {/* First chart and month selection */}
+                  {/* Third chart and month selection */}
         <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,}}>
-          {months1.map((month, index) => (
+          {months3.map((month, index) => (
             <TouchableOpacity
               key={index}
               style={{
@@ -126,7 +142,7 @@ const Battery = () => {
                 backgroundColor: '#86abe1',
                 borderRadius: 8,
               }}
-              onPress={() => showOrHidePointer1(index)}
+              onPress={() => showOrHidePointer3(index)}
             >
               <Text>{month}</Text>
             </TouchableOpacity>
@@ -134,13 +150,13 @@ const Battery = () => {
         </View>
 
         <LineChart
-          scrollRef={ref1}
+          scrollRef={ref3}
           data={lineData5}
-          curve
+          curved
           color1="skyblue"
           initialSpacing={20}
-          maxValue={0.6} // Valor máximo no eixo Y
-          yAxisOffset={-0.05}
+          maxValue={20} // Valor máximo no eixo Y
+          yAxisOffset={0}
           rotateLabel
           noOfSections={6}
           xAxisLabelsVerticalShift={15}
