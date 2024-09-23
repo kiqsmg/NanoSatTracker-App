@@ -4,7 +4,7 @@ import { LineChart } from "react-native-gifted-charts";
 
 import { line_sp_01_current, line_sp_02_current, line_sp_03_current, line_sp_04_current, line_sp_05_current, line_sp_06_current, line_sp_01_02_voltage, line_sp_03_04_voltage, line_sp_05_06_voltage } from '../../state/data_Test';
 
-const Create = () => {
+const SolarPanel = () => {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
 
@@ -147,4 +147,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default SolarPanel;
