@@ -99,6 +99,22 @@ const TabsLayout = () => {
           }}
         />
 
+        <Tabs.Screen 
+          name="overall"
+          options={{
+            title: 'Overall',
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon 
+                icon={icons.chart_2}
+                color={color}
+                name="Overall"
+                focused={focused}
+              />
+            )
+          }}
+        />
+
       </Tabs>
     </>
   )
