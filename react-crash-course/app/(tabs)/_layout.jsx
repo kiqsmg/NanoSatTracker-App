@@ -54,13 +54,13 @@ const TabsLayout = () => {
         <Tabs.Screen 
           name="floripasat1"
           options={{
-            title: 'Floripasat1',
+            title: 'FloripaSat',
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 icon={icons.satellite}
                 color={color}
-                name="Floripasat1"
+                name="FloripaSat"
                 focused={focused}
               />
             )
@@ -70,13 +70,13 @@ const TabsLayout = () => {
         <Tabs.Screen 
           name="solarpanel"
           options={{
-            title: 'Solar Panels',
+            title: 'Panels',
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 icon={icons.chart_1}
                 color={color}
-                name="Solar Panels"
+                name="Panels"
                 focused={focused}
               />
             )
@@ -106,7 +106,7 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
-                icon={icons.chart_2}
+                icon={icons.community}
                 color={color}
                 name="Overall"
                 focused={focused}
@@ -122,7 +122,7 @@ const TabsLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
-                icon={icons.chart_2}
+                icon={icons.profile}
                 color={color}
                 name="Profile"
                 focused={focused}
