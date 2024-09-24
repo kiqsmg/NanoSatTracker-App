@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { LineChart } from "react-native-gifted-charts";
 
 import { line_battery_cell_1_voltage, line_battery_cell_2_voltage, line_battery_charge, line_battery_current, line_battery_temperature} from '../../state/data_Test';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const Battery = () => {
@@ -41,16 +42,17 @@ const Battery = () => {
   };
 
   return (
-    <ScrollView>
+    <SafeAreaView className="bg-black">
+          <ScrollView>
       <View className="mt-10 ml-4">
       <View className="mb-5 mt-10">
-          <Text className="text-2xl text-secondary-400 font-bold text-center mb-5">
+          <Text className="text-2xl text-blue-100 font-bold text-center mb-5">
             Batteries voltage:
           </Text>
-          <Text className=" text-secondary-600 font-bold">
+          <Text className=" text-blue-300 font-bold">
             Cell 01 voltage [V]: blue
           </Text>
-          <Text className=" text-secondary-600 font-bold">
+          <Text className=" text-blue-300 font-bold">
             Cell 02 voltage [V]: orange
           </Text>
 
@@ -73,30 +75,33 @@ const Battery = () => {
           ))}
         </View>
 
-        <LineChart
-          scrollRef={ref1}
-          data={lineData1}
-          data2={lineData2}
-          curved
-          color1="skyblue"
-          color2="orange"
-          initialSpacing={20}
-          maxValue={1}
-          yAxisOffset={3.5}
-          rotateLabel
-          noOfSections={6}
-          xAxisLabelsVerticalShift={15}
-        />
+        <View style={{ marginRight: 5, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+          <LineChart
+            color="#fdfdfd"          
+            scrollRef={ref1}
+            data={lineData1}
+            data2={lineData2}
+            curved
+            color1="blue"
+            color2="orange"
+            initialSpacing={20}
+            maxValue={1}
+            yAxisOffset={3.5}
+            rotateLabel
+            noOfSections={6}
+            xAxisLabelsVerticalShift={15}
+          />
+        </View>
       </View>
 
       <View className="mb-5 mt-10">
-          <Text className="text-2xl text-secondary-400 font-bold text-center mb-5">
+          <Text className="text-2xl text-blue-100 font-bold text-center mb-5">
             Batteries charge & current:
           </Text>
-          <Text className=" text-secondary-600 font-bold">
+          <Text className=" text-blue-300 font-bold">
             Charge: blue
           </Text>
-          <Text className=" text-secondary-600 font-bold">
+          <Text className=" text-blue-300 font-bold">
             Current [A]: orange
           </Text>
 
@@ -119,12 +124,13 @@ const Battery = () => {
           ))}
         </View>
 
+        <View style={{marginRight: 5, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
         <LineChart
           scrollRef={ref2}
           data={lineData3}
           data2={lineData4}
           curved
-          color1="skyblue"
+          color1="blue"
           color2="orange"
           initialSpacing={20}
           maxValue={22}
@@ -133,13 +139,15 @@ const Battery = () => {
           noOfSections={6}
           xAxisLabelsVerticalShift={15}
         />
+        </View>
+        
       </View>
 
       <View className="mb-5 mt-10">
-          <Text className="text-2xl text-secondary-400 font-bold text-center mb-5">
+          <Text className="text-2xl text-blue-100 font-bold text-center mb-5">
             Batteries temperature:
           </Text>
-          <Text className=" text-secondary-600 font-bold">
+          <Text className=" text-blue-300 font-bold">
             Temperature [ºC]: blue
           </Text>
 
@@ -162,11 +170,12 @@ const Battery = () => {
           ))}
         </View>
 
+        <View style={{marginRight: 5, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
         <LineChart
           scrollRef={ref3}
           data={lineData5}
           curved
-          color1="skyblue"
+          color1="blue"
           initialSpacing={20}
           maxValue={20} // Valor máximo no eixo Y
           yAxisOffset={0}
@@ -174,10 +183,14 @@ const Battery = () => {
           noOfSections={6}
           xAxisLabelsVerticalShift={15}
         />
+        </View>
+        
       </View>
 
       </View>
     </ScrollView>
+    </SafeAreaView>
+
   );
 };
 export default Battery;
