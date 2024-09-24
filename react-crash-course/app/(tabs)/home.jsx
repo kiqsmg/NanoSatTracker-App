@@ -2,16 +2,12 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackg
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useGlobalContext } from '../../context/GlobalProvider.js';
-
 const cubesatBackground = require('../../assets/images/cubesat_background.webp');
 const floripasat2_img = require('../../assets/images/FloripaSat2.png');
 const floripasat1_img = require('../../assets/images/FloripaSat1.png');
 
 
 const Home = () => {
-
-  const { logout } = useGlobalContext();
 
 
   const openGitHubLink = () => {
@@ -102,13 +98,7 @@ const Home = () => {
             <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">The Catarina Constellation encompasses a set of satellites with the goal to provide services, mainly, to the civil defence, contributing to the country’s sustainable socioeconomic development agenda.
             </Text>
           </View>
-        </View>
-
-        <View className="p-5 mb-5">
-          <TouchableOpacity onPress={logout} className="bg-red-500 p-2 rounded-xl">
-            <Text className="text-white text-lg font-bold text-center">Logout</Text>
-          </TouchableOpacity>
-        </View>        
+        </View>      
 
       </ScrollView>
     </SafeAreaView>
