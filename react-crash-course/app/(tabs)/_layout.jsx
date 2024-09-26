@@ -1,6 +1,5 @@
 import { Image, View, Text } from 'react-native';
 import { Tabs, Redirect } from 'expo-router';
-
 import { icons } from "../../constants";
 
 const TabIcon = ({ icon, color, name, focused }) => {
@@ -31,7 +30,7 @@ const TabsLayout = () => {
             backgroundColor: "#161622",
             borderTopWidth: 1,
             borderTopColor: "#232533",
-            height: 84,
+            height: 100,
           },
         }}
       >
@@ -50,7 +49,6 @@ const TabsLayout = () => {
             )
           }}
         />
-
         <Tabs.Screen 
           name="floripasat1"
           options={{
@@ -66,7 +64,6 @@ const TabsLayout = () => {
             )
           }}
         />
-
         <Tabs.Screen 
           name="solarpanel"
           options={{
@@ -82,7 +79,6 @@ const TabsLayout = () => {
             )
           }}
         />
-
         <Tabs.Screen 
           name="battery"
           options={{
@@ -98,7 +94,6 @@ const TabsLayout = () => {
             )
           }}
         />
-
         <Tabs.Screen 
           name="overall"
           options={{
@@ -114,7 +109,6 @@ const TabsLayout = () => {
             )
           }}
         />
-
         <Tabs.Screen 
           name="profile"
           options={{
@@ -130,7 +124,6 @@ const TabsLayout = () => {
             )
           }}
         />
-
       </Tabs>
     </>
   )
