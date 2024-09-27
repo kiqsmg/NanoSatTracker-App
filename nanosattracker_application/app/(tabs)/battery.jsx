@@ -41,15 +41,9 @@ const Battery = () => {
       <ScrollView>
         <View className="mt-10 ml-4">
           <View className="mb-5 mt-10">
-            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">
-              Batteries voltage:
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Cell 01 voltage [V]: blue
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Cell 02 voltage [V]: orange
-            </Text>
+            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">Batteries voltage:</Text>
+            <Text className=" text-blue-300 font-bold">Cell 01 voltage [V]: blue</Text>
+            <Text className=" text-blue-300 font-bold">Cell 02 voltage [V]: orange</Text>
 
             {/* First chart*/}
             <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,  marginTop: 10,}}>
@@ -87,15 +81,9 @@ const Battery = () => {
             </View>
           </View>
           <View className="mb-5 mt-10">
-            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">
-              Batteries charge & current:
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Charge: blue
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Current [A]: orange
-            </Text>
+            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">Batteries charge & current:</Text>
+            <Text className=" text-blue-300 font-bold">Charge: blue</Text>
+            <Text className=" text-blue-300 font-bold">Current [A]: orange</Text>
 
             {/* Second chart*/}
             <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,  marginTop: 10,}}>
@@ -132,12 +120,8 @@ const Battery = () => {
             </View> 
           </View>
           <View className="mb-5 mt-10">
-            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">
-              Batteries temperature:
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Temperature [ºC]: blue
-            </Text>
+            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">Batteries temperature:</Text>
+            <Text className=" text-blue-300 font-bold">Temperature [ºC]: blue</Text>
 
             {/* Third chart*/}
             <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10,  marginTop: 10,}}>
