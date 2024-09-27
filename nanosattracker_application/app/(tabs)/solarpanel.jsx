@@ -40,27 +40,13 @@ const SolarPanel = () => {
       <ScrollView>
         <View className="mt-10 ml-4">
           <View className="mb-5 mt-10">
-            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">
-              Solar Panels current:
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-01 [A]: blue
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-02 [A]: orange
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-03 [A]: red
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-04 [A]: green
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-05 [A]: yellow
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-06 [A]: pink
-            </Text>
+            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">Solar Panels current:</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-01 [A]: blue</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-02 [A]: orange</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-03 [A]: red</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-04 [A]: green</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-05 [A]: yellow</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-06 [A]: pink</Text>
 
             {/* First chart*/}
             <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10, marginTop: 10,}}>
@@ -105,18 +91,10 @@ const SolarPanel = () => {
             </View>          
           </View>
           <View className="mb-5 mt-10">
-            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">
-              Solar Panels voltage:
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-01-02 [V]: blue
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-03-04 [V]: orange
-            </Text>
-            <Text className=" text-blue-300 font-bold">
-              Solar Panel-05-06 [V]: red
-            </Text>
+            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">Solar Panels voltage:</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-01-02 [V]: blue</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-03-04 [V]: orange</Text>
+            <Text className=" text-blue-300 font-bold">Solar Panel-05-06 [V]: red</Text>
 
             {/* Second chart*/}
             <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10, marginTop: 10,}}>
