@@ -19,13 +19,7 @@ const FloripaSat1 = () => {
         </View>
         <View>
           <View className=" m-5 bg-secondary-700 p-2 rounded-xl">
-            <Text className=" pl-2 text-lg text-blue-300 font-semibold">FloripaSat-1 is a technology demonstration mission entirely developed by SpaceLab UFSC students at the
-            Federal University of Santa Catarina (UFSC), Brazil. It is cube-shaped satellite made of 5 modules.
-              There the core modules for the mission control and the payloads. The core modules developed at UFSC are the
-              On-Board Data Handling (OBDH), the Telemetry, Tracking, and Control (TT&C), the Electric Power System (EPS),
-                and the passive Attitude Control System (ACS). The payload is an amateur radio repeater, which can be used
-                all over the globe in emergency and rescue situations, for instance.
-            </Text>
+            <Text className=" pl-2 text-lg text-blue-300 font-semibold">FloripaSat-1 is a technology demonstration mission entirely developed by SpaceLab UFSC students at the Federal University of Santa Catarina (UFSC), Brazil. It is cube-shaped satellite made of 5 modules. There the core modules for the mission control and the payloads. The core modules developed at UFSC are the On-Board Data Handling (OBDH), the Telemetry, Tracking, and Control (TT&C), the Electric Power System (EPS), and the passive Attitude Control System (ACS). The payload is an amateur radio repeater, which can be used all over the globe in emergency and rescue situations, for instance.</Text>
           </View>
         </View>
         <View>
@@ -36,13 +30,7 @@ const FloripaSat1 = () => {
               <Image source={eps_img}
               className="w-64 h-64" />     
             </View>
-            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is designed to capture, store and distribute power to other FloripaSat-1 modules. 
-                  The power capture system is based on the conversion of solar energy through six panels located on 
-                  each face of the satellite structure. The captured energy is stored in two series-connected lithium batteries. 
-                  From decision-making algorithms, the other satellite modules are fed according to the available battery power at
-                    a given time. EPS plays a key role in energy management at different times in orbit, such as when the satellite
-                    is in eclipse, with the earth covering the sun.
-              </Text>
+            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is designed to capture, store and distribute power to other FloripaSat-1 modules. The power capture system is based on the conversion of solar energy through six panels located on each face of the satellite structure. The captured energy is stored in two series-connected lithium batteries. From decision-making algorithms, the other satellite modules are fed according to the available battery power at a given time. EPS plays a key role in energy management at different times in orbit, such as when the satellite is in eclipse, with the earth covering the sun.</Text>
           </View>
         </View>
         <View>
@@ -53,12 +41,7 @@ const FloripaSat1 = () => {
               <Image source={ttc_img}
               className="w-64 h-64" />     
             </View>
-            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is responsible for satellite communication with the terrestrial segment.
-                    It is divided into two sub-modules: “Beacon” and “Main Radio”. “Beacon” transmits periodic signals
-                    containing satellite identification (ID) and basic telemetry information. “Main Radio” is responsible for
-                    receiving remote controls from a control station located on Earth (in this case at the UFSC), and send responses
-                      via telemetry. Received remotes are forwarded to OBDH, which performs decoding and the requested processing.
-            </Text>
+            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is responsible for satellite communication with the terrestrial segment. It is divided into two sub-modules: “Beacon” and “Main Radio”. “Beacon” transmits periodic signals containing satellite identification (ID) and basic telemetry information. “Main Radio” is responsible for receiving remote controls from a control station located on Earth (in this case at the UFSC), and send responses via telemetry. Received remotes are forwarded to OBDH, which performs decoding and the requested processing.</Text>
           </View>
         </View>
         <View>
@@ -69,9 +52,7 @@ const FloripaSat1 = () => {
               <Image source={obdh_img}
               className="w-64 h-64" />     
             </View>
-            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is responsible for synchronizing actions and data flow between satellite modules (eg, EPS, Payloads, …) and the ground segment.
-                    OBDH packs the generated data, and stores it in nonvolatile memory for sending to the ground station as soon as possible (when the satellite is passing over UFSC, or over a partner’s ground station). The remote commands sent by the ground segment are received by TT&C and sent to the OBDH which decodes and performs the necessary actions, sending the actions to the other modules if necessary. This allows communication between the entire satellite and the earth.
-            </Text>
+            <Text className=" pl-2 text-lg text-blue-300 font-semibold">The module is responsible for synchronizing actions and data flow between satellite modules (eg, EPS, Payloads, …) and the ground segment. OBDH packs the generated data, and stores it in nonvolatile memory for sending to the ground station as soon as possible (when the satellite is passing over UFSC, or over a partner’s ground station). The remote commands sent by the ground segment are received by TT&C and sent to the OBDH which decodes and performs the necessary actions, sending the actions to the other modules if necessary. This allows communication between the entire satellite and the earth.</Text>
           </View>
         </View>
       </ScrollView>
