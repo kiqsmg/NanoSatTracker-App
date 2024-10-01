@@ -9,7 +9,12 @@ const Overall = () => {
   return (
     <SafeAreaView className="bg-black">
       <ScrollView>
-      <Text className=" mt-10 pl-2 text-center text-3xl text-white font-bold">FloripaSat-1 mission extra data</Text>
+        <View>
+          <Text className=" mt-10 pl-2 text-center text-3xl text-white font-bold">FloripaSat-1 mission extra data</Text>
+        </View>
+        
+        <Text className=" ml-5 mt-2 text-blue-300 font-semibold">Ham Radio collaborators around the World!</Text>
+        
       </ScrollView>
     </SafeAreaView>
   )
