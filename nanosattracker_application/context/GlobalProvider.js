@@ -33,7 +33,7 @@ const GlobalProvider = ({ children }) => {
       await signOut(auth);
       setIsLogged(false);
       setUser(null);
-      router.replace("index");
+      router.replace("/");
     } catch (error) {
       console.error("Logout error:", error);
       // You can show an alert or notification to the user here if needed
