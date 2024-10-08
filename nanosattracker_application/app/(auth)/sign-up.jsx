@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, ScrollView, Image, Alert, Dimensions } from 'react-native';
+import { View, Text, ScrollView, Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, router } from 'expo-router';
 
@@ -50,60 +50,67 @@ const SignUp = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
-      <ScrollView>
-        <View className="w-full justify-center min-h-[65vh] px-4 my-6">
-        <Image 
-            source={images.logo}
-            resizeMode="contain"
-            className="w-[250px] h-[50px]"
-          />
+      {/* KeyboardAvoidingView to handle keyboard push-up */}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 1 : 0}
+      >
+        <ScrollView>
+          <View className="w-full justify-center min-h-[65vh] px-4 my-6">
+          <Image 
+              source={images.logo}
+              resizeMode="contain"
+              className="w-[250px] h-[50px]"
+            />
 
-          <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign up to NanosatTracker
-          </Text>
-
-          <FormField 
-            title="Username"
-            value={form.username}
-            handleChangeText={(e) => setForm({ ...form, username: e })}
-            otherStyles="mt-10"
-          />
-
-          <FormField
-            title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7"
-            keyboardType="email-address"
-          />
-
-          <FormField 
-            title="Password"
-            value={form.password}
-            handleChangeText={(e) => setForm({ ...form, password: e })}
-            otherStyles="mt-7"
-          />
-
-          <CustomButton 
-            title="Sign up"
-            handlePress={submit}
-            containerStyles="mt-7"
-            isLoading={isSubmitting}
-          />
-
-          <View className="flex justify-center pt-5 flex-row gap-2">
-            <Text className="text-lg text-gray-100 font-pregular">
-              Have an account already?
+            <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
+              Sign up to NanosatTracker
             </Text>
-            <Link
-              href="/sign-in"
-              className="text-lg font-psemibold text-secondary"
-            >
-              Login
-            </Link>
+
+            <FormField 
+              title="Username"
+              value={form.username}
+              handleChangeText={(e) => setForm({ ...form, username: e })}
+              otherStyles="mt-10"
+            />
+
+            <FormField
+              title="Email"
+              value={form.email}
+              handleChangeText={(e) => setForm({ ...form, email: e })}
+              otherStyles="mt-7"
+              keyboardType="email-address"
+            />
+
+            <FormField 
+              title="Password"
+              value={form.password}
+              handleChangeText={(e) => setForm({ ...form, password: e })}
+              otherStyles="mt-7"
+            />
+
+            <CustomButton 
+              title="Sign up"
+              handlePress={submit}
+              containerStyles="mt-7"
+              isLoading={isSubmitting}
+            />
+
+            <View className="flex justify-center pt-5 flex-row gap-2">
+              <Text className="text-lg text-gray-100 font-pregular">
+                Have an account already?
+              </Text>
+              <Link
+                href="/sign-in"
+                className="text-lg font-psemibold text-secondary"
+              >
+                Login
+              </Link>
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
