@@ -65,7 +65,7 @@ const SolarPanel = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{ marginRight: 5, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{ marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 scrollRef={ref1}
                 data={lineData1}
@@ -113,7 +113,7 @@ const SolarPanel = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{ marginRight: 5, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{ marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 scrollRef={ref2}
                 data={lineData7}
