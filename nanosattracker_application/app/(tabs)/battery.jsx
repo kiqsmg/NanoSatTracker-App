@@ -62,7 +62,7 @@ const Battery = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{ marginRight: 5, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{ marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 color="#fdfdfd"          
                 scrollRef={ref1}
@@ -102,7 +102,7 @@ const Battery = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{marginRight: 5, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 scrollRef={ref2}
                 data={lineData3}
@@ -140,7 +140,7 @@ const Battery = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{marginRight: 5, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 scrollRef={ref3}
                 data={lineData5}
