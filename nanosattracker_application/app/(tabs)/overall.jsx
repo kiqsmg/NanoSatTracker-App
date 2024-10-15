@@ -26,7 +26,7 @@ const Overall = () => {
             The Spacelab group thanks all Ham Radio operators who collaborated to the FloripaSat-1 mission.
           </Text>
 
-          <View className="flex-row justify-center mt-5">
+          <View className="flex-row justify-center mt-5 mb-10">
             <AnimatedBox height={120} backgroundColor="silver" delay={0}>
               KB9JHU{"\n"}{"\n"}5X
             </AnimatedBox>
