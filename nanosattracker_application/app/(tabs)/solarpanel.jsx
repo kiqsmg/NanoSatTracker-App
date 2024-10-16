@@ -1,36 +1,102 @@
-import React, { useRef } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { LineChart } from "react-native-gifted-charts";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { line_sp_01_current, line_sp_02_current, line_sp_03_current, line_sp_04_current, line_sp_05_current, line_sp_06_current, line_sp_01_02_voltage, line_sp_03_04_voltage, line_sp_05_06_voltage } from '../../state/data_Test';
-
-
 const SolarPanel = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [formattedData, setFormattedData] = useState([]);
+
+  
+  
+  // Move useRef to the top before any conditional returns
   const ref1 = useRef(null);
-  const ref2 = useRef(null);
 
+  useEffect(() => {
+    console.log("Fetching data...");
+  
+    fetch("https://nanosattracker-backend.onrender.com/floripasat1/downlink")
+      .then(res => {
+        console.log("Response received:", res);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((received_Data) => {
+        console.log("Data received:", received_Data);
+  
+        // Filtering the data as per your logic
+        const line_sp_01_current = received_Data.map(item => ({
+          value: item.sp_01_current,
+          label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+        }));
+  
+        const line_sp_02_current = received_Data.map(item => ({
+          value: item.sp_02_current,
+          label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+        }));
+  
+        const line_sp_03_current = received_Data.map(item => ({
+          value: item.sp_03_current,
+          label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+        }));
+  
+        const line_sp_04_current = received_Data.map(item => ({
+          value: item.sp_04_current,
+          label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+        }));
+  
+        const line_sp_05_current = received_Data.map(item => ({
+          value: item.sp_05_current,
+          label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+        }));
+  
+        const line_sp_06_current = received_Data.map(item => ({
+          value: item.sp_06_current,
+          label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
+        }));
+  
+        // Now set this data to state
+        setFormattedData([
+          { data: line_sp_01_current },
+          { data: line_sp_02_current },
+          { data: line_sp_03_current },
+          { data: line_sp_04_current },
+          { data: line_sp_05_current },
+          { data: line_sp_06_current }
+        ]);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);  
+  
 
-  const lineData1 = line_sp_01_current
-  const lineData2 = line_sp_02_current
-  const lineData3 = line_sp_03_current
-  const lineData4 = line_sp_04_current  
-  const lineData5 = line_sp_05_current
-  const lineData6 = line_sp_06_current
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#0e580e" />;
+  }
 
-  const lineData7 = line_sp_01_02_voltage
-  const lineData8 = line_sp_03_04_voltage
-  const lineData9 = line_sp_05_06_voltage
+  if (error) {
+    return <Text>Error: {error.message}</Text>;
+  }
 
-  const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const lineData1 = formattedData[0]?.data || [];
+  const lineData2 = formattedData[1]?.data || [];
+  const lineData3 = formattedData[2]?.data || [];
+  const lineData4 = formattedData[3]?.data || [];
+  const lineData5 = formattedData[4]?.data || [];
+  const lineData6 = formattedData[5]?.data || [];
+
+  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
 
   const showOrHidePointer1 = (index) => {
     ref1.current?.scrollTo({
-      x: index * 200 - 25,
-    });
-  };
-  const showOrHidePointer2 = (index) => {
-    ref2.current?.scrollTo({
       x: index * 200 - 25,
     });
   };
@@ -48,8 +114,8 @@ const SolarPanel = () => {
             <Text className=" text-blue-300 font-bold">Solar Panel-05 [A]: yellow</Text>
             <Text className=" text-blue-300 font-bold">Solar Panel-06 [A]: pink</Text>
 
-            {/* First chart*/}
-            <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10, marginTop: 10,}}>
+            {/* Primeiro gráfico */}
+            <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10, marginTop: 10 }}>
               {month.map((month, index) => (
                 <TouchableOpacity
                   key={index}
@@ -65,7 +131,7 @@ const SolarPanel = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{ marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{ marginRight: 5, paddingBottom: 30, padding: 5, borderRadius: 10, backgroundColor: '#ffffff' }}>
               <LineChart
                 scrollRef={ref1}
                 data={lineData1}
@@ -88,48 +154,6 @@ const SolarPanel = () => {
                 noOfSections={6}
                 xAxisLabelsVerticalShift={15}
               />
-            </View>          
-          </View>
-          <View className="mb-5 mt-10">
-            <Text className="text-2xl text-blue-100 font-bold text-center mb-5">Solar Panels voltage:</Text>
-            <Text className=" text-blue-300 font-bold">Solar Panel-01-02 [V]: blue</Text>
-            <Text className=" text-blue-300 font-bold">Solar Panel-03-04 [V]: orange</Text>
-            <Text className=" text-blue-300 font-bold">Solar Panel-05-06 [V]: red</Text>
-
-            {/* Second chart*/}
-            <View style={{ flexDirection: 'row', marginLeft: 8, marginBottom: 10, marginTop: 10,}}>
-              {month.map((month, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={{
-                    padding: 6,
-                    margin: 4,
-                    backgroundColor: '#86abe1',
-                    borderRadius: 8,
-                  }}
-                  onPress={() => showOrHidePointer2(index)}
-                >
-                  <Text>{month}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-            <View style={{ marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
-              <LineChart
-                scrollRef={ref2}
-                data={lineData7}
-                data2={lineData8}
-                data3={lineData9}
-                curved
-                color1="blue"
-                color2="orange"
-                color3="red"
-                initialSpacing={20}
-                maxValue={6}
-                yAxisOffset={-0.05}
-                rotateLabel
-                noOfSections={6}
-                xAxisLabelsVerticalShift={15}
-              />
             </View>
           </View>
         </View>
@@ -139,3 +163,4 @@ const SolarPanel = () => {
 };
 
 export default SolarPanel;
+
