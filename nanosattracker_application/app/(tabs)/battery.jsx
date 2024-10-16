@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { LineChart } from "react-native-gifted-charts";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -7,16 +7,90 @@ import { line_battery_cell_1_voltage, line_battery_cell_2_voltage, line_battery_
 
 
 const Battery = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [formattedData, setFormattedData] = useState([]);
+
+
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
 
+  useEffect(() => {
+    console.log("Fetching data...");
+  
+    fetch("https://nanosattracker-backend.onrender.com/floripasat1/downlink")
+      .then(res => {
+        console.log("Response received:", res);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((received_Data) => {
+        console.log("Data received:", received_Data);
+  
 
-  const lineData1 = line_battery_cell_1_voltage
-  const lineData2 = line_battery_cell_2_voltage
-  const lineData3 = line_battery_charge
-  const lineData4 = line_battery_current
-  const lineData5 = line_battery_temperature
+        // Filtering the data as per your logic
+        const line_battery_cell_1_voltage = received_Data.map(item => ({
+          value: item.battery_cell_1_voltage,
+          label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+        }));
+        
+        const line_battery_cell_2_voltage = received_Data.map(item => ({
+            value: item.battery_cell_2_voltage,
+            label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+        }));
+        
+        const line_battery_temperature = received_Data.map(item => ({
+            value: item.battery_temperature,
+            label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+        }));
+        
+        const line_battery_charge = received_Data.map(item => ({
+            value: item.battery_charge,
+            label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+        }));
+        
+        const line_battery_current = received_Data.map(item => ({
+            value: item.battery_current,
+            label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+        }));
+
+
+        // Now set this data to state
+        setFormattedData([
+          { data: line_battery_cell_1_voltage },
+          { data: line_battery_cell_2_voltage },
+          { data: line_battery_temperature },
+          { data: line_battery_charge },
+          { data: line_battery_current },
+        ]);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+
+  if (isLoading) {
+    return <ActivityIndicator size="large" color="#0e580e" />;
+  }
+
+  if (error) {
+    return <Text>Error: {error.message}</Text>;
+  }
+  
+  const lineData1 = formattedData[0]?.data || [];
+  const lineData2 = formattedData[1]?.data || [];
+  const lineData3 = formattedData[2]?.data || [];
+  const lineData4 = formattedData[3]?.data || [];
+  const lineData5 = formattedData[4]?.data || [];
+  
 
   const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
 
