@@ -8,9 +8,6 @@ const SolarPanel = () => {
   const [error, setError] = useState(null);
   const [formattedData, setFormattedData] = useState([]);
 
-  
-  
-  // Move useRef to the top before any conditional returns
   const ref1 = useRef(null);
   const ref2 = useRef(null);
 
