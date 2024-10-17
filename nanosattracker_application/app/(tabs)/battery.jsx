@@ -3,8 +3,6 @@ import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'rea
 import { LineChart } from "react-native-gifted-charts";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { line_battery_cell_1_voltage, line_battery_cell_2_voltage, line_battery_charge, line_battery_current, line_battery_temperature} from '../../state/data_Test';
-
 
 const Battery = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,25 +14,18 @@ const Battery = () => {
   const ref2 = useRef(null);
   const ref3 = useRef(null);
 
-  useEffect(() => {
-    console.log("Fetching data...");
-  
+  useEffect(() => {  
     fetch("https://nanosattracker-backend.onrender.com/floripasat1/downlink")
       .then(res => {
-        console.log("Response received:", res);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
         return res.json();
       })
       .then((received_Data) => {
-        console.log("Data received:", received_Data);
-  
-
-        // Filtering the data as per your logic
         const line_battery_cell_1_voltage = received_Data.map(item => ({
-          value: item.battery_cell_1_voltage,
-          label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
+            value: item.battery_cell_1_voltage,
+            label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().padStart(2, '0')}`
         }));
         
         const line_battery_cell_2_voltage = received_Data.map(item => ({
@@ -58,7 +49,7 @@ const Battery = () => {
         }));
 
 
-        // Now set this data to state
+        // Setting this data to state
         setFormattedData([
           { data: line_battery_cell_1_voltage },
           { data: line_battery_cell_2_voltage },
