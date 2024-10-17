@@ -22,7 +22,7 @@ const SignIn = () => {
 
   const { isLogged, setIsLogged, setUser } = useGlobalContext();
 
-  // Redireciona para a home se o usuário já estiver logado
+  // Redirect to home if user is already logged-in
   useEffect(() => {
     if (isLogged) {
       router.replace('/home');
@@ -42,7 +42,7 @@ const SignIn = () => {
       const user = userCredential.user;
       console.log('User signed in:', user);
 
-      // Atualiza o estado global com os dados do usuário
+      // Update global state with the user's data
       setUser(user);
       setIsLogged(true);
 
@@ -75,11 +75,9 @@ const SignIn = () => {
               resizeMode="contain"
               className="w-[250px] h-[50px]"
             />
-
             <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
               Log in to NanoSatTracker
             </Text>
-
             <FormField
               title="Email"
               value={form.email}
@@ -87,7 +85,6 @@ const SignIn = () => {
               otherStyles="mt-7"
               keyboardType="email-address"
             />
-
             <FormField
               title="Password"
               value={form.password}
@@ -95,14 +92,12 @@ const SignIn = () => {
               otherStyles="mt-7"
               //secureTextEntry
             />
-
             <CustomButton
               title="Sign In"
               handlePress={submit}
               containerStyles="mt-7"
               isLoading={isSubmitting}
             />
-
             <View className="flex justify-center pt-5 flex-row gap-2">
               <Text className="text-lg text-gray-100 font-pregular">
                 Don't have an account?
