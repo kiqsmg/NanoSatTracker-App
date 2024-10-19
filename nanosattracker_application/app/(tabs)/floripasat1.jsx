@@ -57,7 +57,7 @@ const FloripaSat1 = () => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default FloripaSat1
