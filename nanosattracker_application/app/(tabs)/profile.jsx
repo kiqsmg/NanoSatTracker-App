@@ -30,7 +30,7 @@ const Profile = () => {
         </TouchableOpacity>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default Profile
