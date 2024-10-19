@@ -158,7 +158,7 @@ const SolarPanel = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{ marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{ marginRight: 5, paddingBottom: 60, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 scrollRef={ref1}
                 data={lineData1}
@@ -168,6 +168,7 @@ const SolarPanel = () => {
                 data5={lineData5}
                 data6={lineData6}
                 curved
+                isAnimated
                 color1="blue"
                 color2="orange"
                 color3="red"
@@ -179,9 +180,14 @@ const SolarPanel = () => {
                 yAxisOffset={-0.05}
                 rotateLabel
                 noOfSections={6}
-                xAxisLabelsVerticalShift={15}
+                xAxisLabelsVerticalShift={20}
+                xAxisLabelTextStyle={{
+                  alignSelf: 'flex-end',
+                  marginRight: -35,
+                  marginTop: -25,
+                }}
               />
-            </View>          
+            </View>     
           </View>
           <View className="mb-5 mt-10">
             <Text className="text-2xl text-blue-100 font-bold text-center mb-5">Solar Panels voltage:</Text>
@@ -206,22 +212,28 @@ const SolarPanel = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{ marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{ marginRight: 5, paddingBottom: 60, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 scrollRef={ref2}
                 data={lineData7}
                 data2={lineData8}
                 data3={lineData9}
                 curved
+                isAnimated
                 color1="blue"
                 color2="orange"
                 color3="red"
                 initialSpacing={20}
                 maxValue={6}
-                yAxisOffset={-0.05}
+                yAxisOffset={-0.5}
                 rotateLabel
                 noOfSections={6}
-                xAxisLabelsVerticalShift={15}
+                xAxisLabelsVerticalShift={20}
+                xAxisLabelTextStyle={{
+                  alignSelf: 'flex-end',
+                  marginRight: -35,
+                  marginTop: -25,
+                }}
               />
             </View>
           </View>
