@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Linking } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, ImageBackground, Linking } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -36,7 +36,7 @@ const Home = () => {
             className="w-36 h-64" />     
           </View>
           <View className=" bg-secondary-700 p-2 rounded-xl">
-            <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">FloripaSat-1 is a platform with five modules including core components for mission control and payloads, featuring an amateur radio repeater for global emergency and rescue communications.</Text>
+            <Text className=" p-5 text-lg text-blue-300 font-semibold">FloripaSat-1 is a platform with five modules including core components for mission control and payloads, featuring an amateur radio repeater for global emergency and rescue communications.</Text>
           </View>
         </View>
         <View className="p-5 mb-5">
@@ -47,7 +47,7 @@ const Home = () => {
             className="w-36 h-64" />     
           </View>
           <View className=" bg-secondary-700 p-2 rounded-xl">
-            <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">GOLDS-UFSC is a service module for INPE’s EDC payload, and also a platform for the test of core spacecraft technologies in a microgravity, high-radiation and low Earth orbit environment.</Text>
+            <Text className=" p-5 text-lg text-blue-300 font-semibold">GOLDS-UFSC is a service module for INPE’s EDC payload, and also a platform for the test of core spacecraft technologies in a microgravity, high-radiation and low Earth orbit environment.</Text>
           </View>
         </View>
         <View className="p-5 mb-5">
@@ -58,7 +58,7 @@ const Home = () => {
             className="w-36 h-64" />     
           </View>
           <View className=" bg-secondary-700 p-2 rounded-xl">
-            <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">The Catarina Constellation encompasses a set of satellites with the goal to provide services, mainly, to the civil defence, contributing to the country’s sustainable socioeconomic development agenda.</Text>
+            <Text className=" p-5 text-lg text-blue-300 font-semibold">The Catarina Constellation encompasses a set of satellites with the goal to provide services, mainly, to the civil defence, contributing to the country’s sustainable socioeconomic development agenda.</Text>
           </View>
         </View>
         <View className="p-5 mb-5">
@@ -69,12 +69,12 @@ const Home = () => {
             className="w-36 h-64" />     
           </View>
           <View className=" bg-secondary-700 p-2 rounded-xl">
-            <Text className=" pl-2 text-lg mt-2 text-blue-300 font-semibold">The Catarina Constellation encompasses a set of satellites with the goal to provide services, mainly, to the civil defence, contributing to the country’s sustainable socioeconomic development agenda.</Text>
+            <Text className=" p-5 text-lg text-blue-300 font-semibold">The Catarina Constellation encompasses a set of satellites with the goal to provide services, mainly, to the civil defence, contributing to the country’s sustainable socioeconomic development agenda.</Text>
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default Home
