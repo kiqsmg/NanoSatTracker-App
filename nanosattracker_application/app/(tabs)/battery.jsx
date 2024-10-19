@@ -127,13 +127,14 @@ const Battery = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{ marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{ marginRight: 5, paddingBottom: 60, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 color="#fdfdfd"          
                 scrollRef={ref1}
                 data={lineData1}
                 data2={lineData2}
                 curved
+                isAnimated
                 color1="blue"
                 color2="orange"
                 initialSpacing={20}
@@ -141,7 +142,12 @@ const Battery = () => {
                 yAxisOffset={3.5}
                 rotateLabel
                 noOfSections={6}
-                xAxisLabelsVerticalShift={15}
+                xAxisLabelsVerticalShift={20}
+                xAxisLabelTextStyle={{
+                  alignSelf: 'flex-start',
+                  marginRight: -35,
+                  marginTop: -25,
+                }}
               />
             </View>
           </View>
@@ -167,12 +173,13 @@ const Battery = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{marginRight: 5, paddingBottom: 60, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 scrollRef={ref2}
                 data={lineData3}
                 data2={lineData4}
                 curved
+                isAnimated
                 color1="blue"
                 color2="orange"
                 initialSpacing={20}
@@ -180,7 +187,12 @@ const Battery = () => {
                 yAxisOffset={-1}
                 rotateLabel
                 noOfSections={6}
-                xAxisLabelsVerticalShift={15}
+                xAxisLabelsVerticalShift={20}
+                xAxisLabelTextStyle={{
+                  alignSelf: 'flex-start',
+                  marginRight: -35,
+                  marginTop: -25,
+                }}
               />
             </View> 
           </View>
@@ -205,18 +217,24 @@ const Battery = () => {
                 </TouchableOpacity>
               ))}
             </View>
-            <View style={{marginRight: 5, paddingBottom: 30, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
+            <View style={{marginRight: 5, paddingBottom: 60, padding:5, borderRadius: 10, backgroundColor: '#ffffff'}}>
               <LineChart
                 scrollRef={ref3}
                 data={lineData5}
                 curved
+                isAnimated
                 color1="blue"
                 initialSpacing={20}
                 maxValue={20}
                 yAxisOffset={0}
                 rotateLabel
                 noOfSections={6}
-                xAxisLabelsVerticalShift={15}
+                xAxisLabelsVerticalShift={55}
+                xAxisLabelTextStyle={{
+                  alignSelf: 'flex-start',
+                  marginRight: -35,
+                  marginTop: -30,
+                }}
               />
             </View>
           </View>
