@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged, signOut } from "@firebase/auth";
+import { onAuthStateChanged, signOut } from "@firebase/auth";
 import { useRouter } from 'expo-router';
 import { auth } from "../lib/fireabaseConfig";
 
@@ -36,7 +36,6 @@ const GlobalProvider = ({ children }) => {
       router.replace("/");
     } catch (error) {
       console.error("Logout error:", error);
-      // You can show an alert or notification to the user here if needed
     }
   };
   return (
