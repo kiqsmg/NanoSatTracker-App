@@ -17,16 +17,16 @@ const SolarPanel = () => {
   
     fetch("https://nanosattracker-backend.onrender.com/floripasat1/downlink")
       .then(res => {
-        console.log("Response received:", res);
+        //console.log("Response received:", res);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
         return res.json();
       })
       .then((received_Data) => {
-        console.log("Data received:", received_Data);
+        //console.log("Data received:", received_Data);
   
-        // Filtering the data as per your logic
+        // Filtering the data
         const line_sp_01_current = received_Data.map(item => ({
           value: item.sp_01_current,
           label: `${item.day.toString().padStart(2, '0')}-${item.month.toString().padStart(2, '0')}-${item.year.toString().slice(-2)}`
@@ -73,7 +73,7 @@ const SolarPanel = () => {
         }));
 
 
-        // Now set this data to state
+        // Now set data to state
         setFormattedData([
           { data: line_sp_01_current },
           { data: line_sp_02_current },
