@@ -16,7 +16,7 @@ const Profile = () => {
         <Text className=" ml-5 mt-2 text-blue-300 font-semibold text-center">Spacelab- NanosatTracker</Text>
       </View>
       <View className="p-5 mb-5 mt-20">
-        <View className="flex-1 justify-center items-center m-5 mt-10 mb-10">
+        <View className="flex-1 justify-center items-center m-5 mt-10 mb-12">
           <Image source={profile}
             className="w-36 h-36 rounded-full" />  
         </View>
