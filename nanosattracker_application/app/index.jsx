@@ -23,7 +23,7 @@ export default function App() {
             </Text>
           </View>
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
-            Where Satellites and Data Converge: Understand Space Data Like Never Before with NanoSatTracker.
+            Where Satellites and Data Converge: Understand space data like never before with NanoSatTracker.
           </Text>
           <CustomButton
             title="Continue"
