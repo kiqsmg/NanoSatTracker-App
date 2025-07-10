@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "@firebase/auth";
 import { useRouter } from 'expo-router';
-import { auth } from "../lib/fireabaseConfig";
+import { auth } from "../lib/firebaseConfig";
 
 
 const GlobalContext = createContext();
