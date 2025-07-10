@@ -8,7 +8,7 @@ import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 
 import { signInWithEmailAndPassword } from '@firebase/auth';
-import { auth } from '../../lib/fireabaseConfig.js';
+import { auth } from '../../lib/firebaseConfig.js';
 
 import { useGlobalContext } from '../../context/GlobalProvider.js'
 
