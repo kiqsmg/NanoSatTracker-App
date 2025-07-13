@@ -7,9 +7,8 @@ import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 
-import { createUserWithEmailAndPassword } from '@firebase/auth'; // Import the correct function
+import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { auth } from '../../lib/firebaseConfig.js';
-
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,17 +25,22 @@ const SignUp = () => {
       return;
     }
 
+    // Check if Firebase auth is available
+    if (!auth) {
+      Alert.alert("Error", "Authentication service is not available. Please try again.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       // Firebase sign-up (create user)
-      const userCredential = await createUserWithEmailAndPassword( auth, form.email, form.password );
+      const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
       const user = userCredential.user;
       console.log('User created:', user);
 
       // Navigate to home page after successful sign-up
-      router.replace("/home");
+      router.replace("/(tabs)/home");
     } catch (error) {
-      Alert.alert("O código tá parando aqui!!!!");
       Alert.alert("Error", error.message);
     } finally {
       setIsSubmitting(false);
@@ -44,55 +48,90 @@ const SignUp = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
-      {/* KeyboardAvoidingView to handle keyboard push-up */}
+    <SafeAreaView className="bg-primary flex-1">
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 1 : 0}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
       >
-        <ScrollView>
-          <View className="w-full justify-center min-h-[65vh] px-4 my-6">
-          <Image 
-              source={images.logo}
-              resizeMode="contain"
-              className="w-[250px] h-[50px]"
-            />
-            <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-              Sign up to NanosatTracker
-            </Text>
-            <FormField 
-              title="Username"
-              value={form.username}
-              handleChangeText={(e) => setForm({ ...form, username: e })}
-              otherStyles="mt-10"
-            />
-            <FormField
-              title="Email"
-              value={form.email}
-              handleChangeText={(e) => setForm({ ...form, email: e })}
-              otherStyles="mt-7"
-              keyboardType="email-address"
-            />
-            <FormField 
-              title="Password"
-              value={form.password}
-              handleChangeText={(e) => setForm({ ...form, password: e })}
-              otherStyles="mt-7"
-            />
-            <CustomButton 
-              title="Sign up"
-              handlePress={submit}
-              containerStyles="mt-7"
-              isLoading={isSubmitting}
-            />
-            <View className="flex justify-center pt-5 flex-row gap-2">
-              <Text className="text-lg text-gray-100 font-pregular">
-                Have an account already?
+        <ScrollView 
+          contentContainerStyle={{ 
+            flexGrow: 1,
+            paddingHorizontal: 20,
+            paddingVertical: 40
+          }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View className="flex-1 justify-center">
+            {/* Logo Section */}
+            <View className="items-center mb-8">
+              <Image 
+                source={images.logo}
+                resizeMode="contain"
+                className="w-64 h-16 mb-6"
+              />
+            </View>
+
+            {/* Title Section */}
+            <View className="items-center mb-8">
+              <Text className="text-3xl font-pbold text-white text-center mb-2">
+                Create Account
+              </Text>
+              <Text className="text-lg font-pregular text-gray-100 text-center">
+                Sign up to NanoSatTracker
+              </Text>
+            </View>
+
+            {/* Form Section */}
+            <View className="space-y-6">
+              <FormField 
+                title="Username"
+                value={form.username}
+                handleChangeText={(e) => setForm({ ...form, username: e })}
+                placeholder="Enter your username"
+                autoCapitalize="words"
+                autoCorrect={false}
+              />
+              
+              <FormField
+                title="Email"
+                value={form.email}
+                handleChangeText={(e) => setForm({ ...form, email: e })}
+                placeholder="Enter your email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              
+              <FormField 
+                title="Password"
+                value={form.password}
+                handleChangeText={(e) => setForm({ ...form, password: e })}
+                placeholder="Enter your password"
+                secureTextEntry={true}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+
+            {/* Button Section */}
+            <View className="mt-8">
+              <CustomButton 
+                title="Sign Up"
+                handlePress={submit}
+                containerStyles="w-full"
+                isLoading={isSubmitting}
+              />
+            </View>
+
+            {/* Sign In Link */}
+            <View className="flex-row justify-center items-center mt-8 pt-4">
+              <Text className="text-base font-pregular text-gray-100">
+                Have an account already?{' '}
               </Text>
               <Link
-                href="/sign-in"
-                className="text-lg font-psemibold text-secondary"
+                href="/(auth)/sign-in"
+                className="text-base font-psemibold text-secondary"
               >
                 Login
               </Link>

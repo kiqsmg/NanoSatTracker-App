@@ -60,4 +60,4 @@ const FloripaSat1 = () => {
   );
 };
 
-export default FloripaSat1
+export default FloripaSat1;

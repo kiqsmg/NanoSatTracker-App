@@ -25,13 +25,19 @@ const SignIn = () => {
   // Redirect to home if user is already logged-in
   useEffect(() => {
     if (isLogged) {
-      router.replace('/home');
+      router.replace('/(tabs)/home');
     }
   }, [isLogged]);
 
   const submit = async () => {
     if (!form.email || !form.password) {
       Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+
+    // Check if Firebase auth is available
+    if (!auth) {
+      Alert.alert("Error", "Authentication service is not available. Please try again.");
       return;
     }
 
@@ -47,7 +53,7 @@ const SignIn = () => {
       setIsLogged(true);
 
       // Navigate to home page after successful sign-in
-      router.replace("/home");
+      router.replace("/(tabs)/home");
     } catch (error) {
       Alert.alert("Error", error.message);
     } finally {
@@ -56,55 +62,81 @@ const SignIn = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
-      {/* KeyboardAvoidingView to handle keyboard push-up */}
+    <SafeAreaView className="bg-primary flex-1">
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 1 : 0}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
       >
-        <ScrollView>
-          <View
-            className="w-full flex justify-center h-full px-4 my-6"
-            style={{
-              minHeight: Dimensions.get("window").height - 100,
-            }}
-          >
-            <Image
-              source={images.logo}
-              resizeMode="contain"
-              className="w-[250px] h-[50px]"
-            />
-            <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-              Log in to NanoSatTracker
-            </Text>
-            <FormField
-              title="Email"
-              value={form.email}
-              handleChangeText={(e) => setForm({ ...form, email: e })}
-              otherStyles="mt-7"
-              keyboardType="email-address"
-            />
-            <FormField
-              title="Password"
-              value={form.password}
-              handleChangeText={(e) => setForm({ ...form, password: e })}
-              otherStyles="mt-7"
-              //secureTextEntry
-            />
-            <CustomButton
-              title="Sign In"
-              handlePress={submit}
-              containerStyles="mt-7"
-              isLoading={isSubmitting}
-            />
-            <View className="flex justify-center pt-5 flex-row gap-2">
-              <Text className="text-lg text-gray-100 font-pregular">
-                Don't have an account?
+        <ScrollView 
+          contentContainerStyle={{ 
+            flexGrow: 1,
+            paddingHorizontal: 20,
+            paddingVertical: 40
+          }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View className="flex-1 justify-center">
+            {/* Logo Section */}
+            <View className="items-center mb-8">
+              <Image
+                source={images.logo}
+                resizeMode="contain"
+                className="w-64 h-16 mb-6"
+              />
+            </View>
+
+            {/* Title Section */}
+            <View className="items-center mb-8">
+              <Text className="text-3xl font-pbold text-white text-center mb-2">
+                Welcome Back
+              </Text>
+              <Text className="text-lg font-pregular text-gray-100 text-center">
+                Log in to NanoSatTracker
+              </Text>
+            </View>
+
+            {/* Form Section */}
+            <View className="space-y-6">
+              <FormField
+                title="Email"
+                value={form.email}
+                handleChangeText={(e) => setForm({ ...form, email: e })}
+                placeholder="Enter your email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              
+              <FormField
+                title="Password"
+                value={form.password}
+                handleChangeText={(e) => setForm({ ...form, password: e })}
+                placeholder="Enter your password"
+                secureTextEntry={true}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </View>
+
+            {/* Button Section */}
+            <View className="mt-8">
+              <CustomButton
+                title="Sign In"
+                handlePress={submit}
+                containerStyles="w-full"
+                isLoading={isSubmitting}
+              />
+            </View>
+
+            {/* Sign Up Link */}
+            <View className="flex-row justify-center items-center mt-8 pt-4">
+              <Text className="text-base font-pregular text-gray-100">
+                Don't have an account?{' '}
               </Text>
               <Link
-                href="/sign-up"
-                className="text-lg font-psemibold text-secondary"
+                href="/(auth)/sign-up"
+                className="text-base font-psemibold text-secondary"
               >
                 Sign up
               </Link>
