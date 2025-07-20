@@ -1,46 +1,98 @@
-import { useEffect } from "react";
-import { SplashScreen, Stack } from 'expo-router';
+import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
+import { SplashScreen, Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { GlobalProvider, useGlobalContext } from '../context/GlobalProvider';
 
-import GlobalProvider from '../context/GlobalProvider.js';
+export {
+  // Catch any errors thrown by the Layout component.
+  ErrorBoundary,
+} from 'expo-router';
 
+export const unstable_settings = {
+  // Ensure that reloading on `/modal` keeps a back button present.
+  initialRouteName: 'index',
+};
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const RootLayout = () => {
-  const [fontsLoaded, error] = useFonts({
-    "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
-    "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
-    "Poppins-ExtraBold": require("../assets/fonts/Poppins-ExtraBold.ttf"),
-    "Poppins-ExtraLight": require("../assets/fonts/Poppins-ExtraLight.ttf"),
-    "Poppins-Light": require("../assets/fonts/Poppins-Light.ttf"),
-    "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
-    "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
-    "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
-    "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
+function AuthListener() {
+  const { setUser, setUserInfo } = useGlobalContext();
+
+  useEffect(() => {
+    const setupAuthListener = async () => {
+      try {
+        const { getAuthInstance } = await import('../lib/firebaseConfig');
+        const auth = await getAuthInstance();
+        
+        const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+          console.log('Auth state changed:', currentUser ? 'User logged in' : 'User logged out');
+          setUser(currentUser);
+          
+          if (currentUser) {
+            setUserInfo({
+              uid: currentUser.uid,
+              email: currentUser.email,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+            });
+          } else {
+            setUserInfo(null);
+          }
+        });
+
+        return unsubscribe;
+      } catch (error) {
+        console.error('Auth listener setup error:', error);
+      }
+    };
+
+    setupAuthListener();
+  }, [setUser, setUserInfo]);
+
+  return null;
+}
+
+export default function RootLayout() {
+  const [loaded, error] = useFonts({
+    'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
   });
-  
+
+  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
-  
-    if (fontsLoaded) {
+  }, [error]);
+
+  useEffect(() => {
+    if (loaded) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, error]);
-  
-  if (!fontsLoaded && !error) {
+  }, [loaded]);
+
+  if (!loaded) {
     return null;
   }
 
   return (
     <GlobalProvider>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false}}/>
-        <Stack.Screen name="(auth)" options={{ headerShown: false}}/>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false}}/>
-      </Stack>
+      <AuthListener />
+      <RootLayoutNav />
     </GlobalProvider>
-      
   );
-};
+}
 
-export default RootLayout;
+function RootLayoutNav() {
+  return (
+    <>
+      <StatusBar style="light" />
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </>
+  );
+}

@@ -1,146 +1,341 @@
-import { useState } from 'react';
-import { View, Text, ScrollView, Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, router } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { Ionicons } from '@expo/vector-icons';
 
-import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
-
-import { createUserWithEmailAndPassword } from '@firebase/auth';
-import { auth } from '../../lib/firebaseConfig.js';
+import { useGlobalContext } from '../../context/GlobalProvider';
+import { getAuthErrorMessage } from '../../lib/firebaseConfig';
 
 const SignUp = () => {
+  const { setUser, setUserInfo, setLoading } = useGlobalContext();
+  const [form, setForm] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const submit = async () => {
-    if (!form.username || !form.email || !form.password) {
-      Alert.alert("Error", "Please fill in all fields");
+  const handleSignUp = async () => {
+    if (!form.fullName || !form.email || !form.password || !form.confirmPassword) {
+      Alert.alert('Error', 'Please fill in all fields');
       return;
     }
 
-    // Check if Firebase auth is available
-    if (!auth) {
-      Alert.alert("Error", "Authentication service is not available. Please try again.");
+    if (form.password !== form.confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match');
+      return;
+    }
+
+    if (form.password.length < 6) {
+      Alert.alert('Error', 'Password must be at least 6 characters long');
       return;
     }
 
     setIsSubmitting(true);
+    setLoading(true);
+    
     try {
-      // Firebase sign-up (create user)
-      const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
-      const user = userCredential.user;
-      console.log('User created:', user);
-
-      // Navigate to home page after successful sign-up
-      router.replace("/(tabs)/home");
+      // Get auth instance (mock auth)
+      const { getAuthInstance } = await import('../../lib/firebaseConfig');
+      const auth = await getAuthInstance();
+      
+      const userCredential = await auth.createUserWithEmailAndPassword(form.email, form.password);
+      
+      // Update user profile with full name
+      await auth.updateProfile(userCredential.user, {
+        displayName: form.fullName
+      });
+      
+      // Update global state
+      setUser(userCredential.user);
+      setUserInfo({
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        displayName: form.fullName,
+        photoURL: userCredential.user.photoURL,
+      });
+      
+      console.log('Created user:', userCredential.user);
+      Alert.alert('Success', 'Account created successfully!');
+      
+      // Small delay to ensure state updates are complete
+      setTimeout(() => {
+        // Navigate to main app - go to home tab specifically
+        router.replace('/(tabs)/home');
+      }, 500);
+      
     } catch (error) {
-      Alert.alert("Error", error.message);
+      console.error('Sign up error:', error);
+      const errorMessage = error.code ? getAuthErrorMessage(error.code) : error.message;
+      Alert.alert('Error', errorMessage || 'Failed to sign up');
     } finally {
       setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
+  const handleGoogleSignUp = () => {
+    Alert.alert('Info', 'Google sign-up will be implemented in the next step');
+  };
+
+  const handleAppleSignUp = () => {
+    Alert.alert('Info', 'Apple sign-up will be implemented in the next step');
+  };
+
   return (
-    <SafeAreaView className="bg-primary flex-1">
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+    <SafeAreaView style={styles.container}>
+      <StatusBar style="dark" />
+      
+      <ScrollView 
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
       >
-        <ScrollView 
-          contentContainerStyle={{ 
-            flexGrow: 1,
-            paddingHorizontal: 20,
-            paddingVertical: 40
-          }}
-          showsVerticalScrollIndicator={false}
-        >
-          <View className="flex-1 justify-center">
-            {/* Logo Section */}
-            <View className="items-center mb-8">
-              <Image 
-                source={images.logo}
-                resizeMode="contain"
-                className="w-64 h-16 mb-6"
-              />
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color="#333" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Sign Up</Text>
+          <View style={styles.placeholder} />
+        </View>
+
+        <View style={styles.content}>
+          <View style={styles.logoContainer}>
+            <Image 
+              source={require('../../assets/images/logo.png')} 
+              style={styles.logo}
+              resizeMode="contain"
+            />
+            <Text style={styles.welcomeText}>Create Account</Text>
+            <Text style={styles.subtitleText}>Sign up to get started</Text>
+          </View>
+
+          <View style={styles.formContainer}>
+            <FormField
+              title="Full Name"
+              value={form.fullName}
+              handleChangeText={(e) => setForm({ ...form, fullName: e })}
+              otherStyles={styles.input}
+              placeholder="Enter your full name"
+              autoCapitalize="words"
+            />
+
+            <FormField
+              title="Email"
+              value={form.email}
+              handleChangeText={(e) => setForm({ ...form, email: e })}
+              otherStyles={styles.input}
+              keyboardType="email-address"
+              placeholder="Enter your email"
+              autoCapitalize="none"
+            />
+
+            <FormField
+              title="Password"
+              value={form.password}
+              handleChangeText={(e) => setForm({ ...form, password: e })}
+              otherStyles={styles.input}
+              placeholder="Enter your password"
+              autoCapitalize="none"
+              secureTextEntry={!showPassword}
+              rightIcon={
+                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                  <Ionicons 
+                    name={showPassword ? "eye-off" : "eye"} 
+                    size={20} 
+                    color="#666" 
+                  />
+                </TouchableOpacity>
+              }
+            />
+
+            <FormField
+              title="Confirm Password"
+              value={form.confirmPassword}
+              handleChangeText={(e) => setForm({ ...form, confirmPassword: e })}
+              otherStyles={styles.input}
+              placeholder="Confirm your password"
+              autoCapitalize="none"
+              secureTextEntry={!showConfirmPassword}
+              rightIcon={
+                <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                  <Ionicons 
+                    name={showConfirmPassword ? "eye-off" : "eye"} 
+                    size={20} 
+                    color="#666" 
+                  />
+                </TouchableOpacity>
+              }
+            />
+
+            <CustomButton
+              title="Sign Up"
+              handlePress={handleSignUp}
+              containerStyles={styles.signUpButton}
+              isLoading={isSubmitting}
+            />
+
+            <View style={styles.dividerContainer}>
+              <View style={styles.divider} />
+              <Text style={styles.dividerText}>or continue with</Text>
+              <View style={styles.divider} />
             </View>
 
-            {/* Title Section */}
-            <View className="items-center mb-8">
-              <Text className="text-3xl font-pbold text-white text-center mb-2">
-                Create Account
-              </Text>
-              <Text className="text-lg font-pregular text-gray-100 text-center">
-                Sign up to NanoSatTracker
-              </Text>
+            <View style={styles.socialButtonsContainer}>
+              <TouchableOpacity style={styles.socialButton} onPress={handleGoogleSignUp}>
+                <Ionicons name="logo-google" size={24} color="#4285F4" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.socialButton} onPress={handleAppleSignUp}>
+                <Ionicons name="logo-apple" size={24} color="#000" />
+              </TouchableOpacity>
             </View>
 
-            {/* Form Section */}
-            <View className="space-y-6">
-              <FormField 
-                title="Username"
-                value={form.username}
-                handleChangeText={(e) => setForm({ ...form, username: e })}
-                placeholder="Enter your username"
-                autoCapitalize="words"
-                autoCorrect={false}
-              />
-              
-              <FormField
-                title="Email"
-                value={form.email}
-                handleChangeText={(e) => setForm({ ...form, email: e })}
-                placeholder="Enter your email"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              
-              <FormField 
-                title="Password"
-                value={form.password}
-                handleChangeText={(e) => setForm({ ...form, password: e })}
-                placeholder="Enter your password"
-                secureTextEntry={true}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-            </View>
-
-            {/* Button Section */}
-            <View className="mt-8">
-              <CustomButton 
-                title="Sign Up"
-                handlePress={submit}
-                containerStyles="w-full"
-                isLoading={isSubmitting}
-              />
-            </View>
-
-            {/* Sign In Link */}
-            <View className="flex-row justify-center items-center mt-8 pt-4">
-              <Text className="text-base font-pregular text-gray-100">
-                Have an account already?{' '}
-              </Text>
-              <Link
-                href="/(auth)/sign-in"
-                className="text-base font-psemibold text-secondary"
-              >
-                Login
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>Already have an account? </Text>
+              <Link href="/sign-in" asChild>
+                <TouchableOpacity>
+                  <Text style={styles.linkText}>Sign In</Text>
+                </TouchableOpacity>
               </Link>
             </View>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  backButton: {
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: '#F8F9FA',
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#333',
+  },
+  placeholder: {
+    width: 40,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 20,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 30,
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    marginBottom: 24,
+  },
+  welcomeText: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  subtitleText: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+  formContainer: {
+    flex: 1,
+  },
+  input: {
+    marginBottom: 16,
+  },
+  signUpButton: {
+    marginTop: 8,
+    marginBottom: 28,
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 28,
+  },
+  divider: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#E0E0E0',
+  },
+  dividerText: {
+    marginHorizontal: 16,
+    color: '#666',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  socialButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 20,
+    marginBottom: 30,
+  },
+  socialButton: {
+    width: 56,
+    height: 56,
+    borderRadius: 16,
+    backgroundColor: '#F8F9FA',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 'auto',
+    paddingBottom: 20,
+  },
+  footerText: {
+    color: '#666',
+    fontSize: 14,
+  },
+  linkText: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+});
 
 export default SignUp;

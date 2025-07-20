@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
-
-import { icons } from "../constants";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 
 const FormField = ({
   title,
@@ -9,42 +8,78 @@ const FormField = ({
   placeholder,
   handleChangeText,
   otherStyles,
+  error,
+  rightIcon,
   ...props
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
-
   return (
-    <View className={`space-y-3 ${otherStyles}`}>
-      <Text className="text-base text-white font-pmedium">{title}</Text>
+    <View style={[styles.container, otherStyles]}>
+      <Text style={styles.title}>{title}</Text>
 
-      <View className="w-full h-14 px-4 bg-black-100 rounded-xl border border-black-200 focus:border-secondary flex flex-row items-center">
+      <View style={[styles.inputContainer, error && styles.inputError]}>
         <TextInput
-          className="flex-1 text-white font-pregular text-base"
+          style={styles.input}
           value={value}
           placeholder={placeholder}
-          placeholderTextColor="#7B7B8B"
+          placeholderTextColor="#999"
           onChangeText={handleChangeText}
-          secureTextEntry={title === "Password" && !showPassword}
-          style={{ fontSize: 16 }}
           {...props}
         />
 
-        {title === "Password" && (
-          <TouchableOpacity 
-            onPress={() => setShowPassword(!showPassword)}
-            className="p-2"
-          >
-            <Image
-              source={!showPassword ? icons.eye : icons.eyeHide}
-              className="w-5 h-5"
-              resizeMode="contain"
-              tintColor="#7B7B8B"
-            />
-          </TouchableOpacity>
+        {rightIcon && (
+          <View style={styles.rightIcon}>
+            {rightIcon}
+          </View>
         )}
       </View>
+      
+      {error && (
+        <Text style={styles.errorText}>
+          {error}
+        </Text>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F8F9FA',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    height: 56,
+  },
+  inputError: {
+    borderColor: '#FF6B6B',
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '400',
+  },
+  rightIcon: {
+    marginLeft: 8,
+  },
+  errorText: {
+    color: '#FF6B6B',
+    fontSize: 14,
+    marginTop: 4,
+    fontWeight: '400',
+  },
+});
 
 export default FormField;

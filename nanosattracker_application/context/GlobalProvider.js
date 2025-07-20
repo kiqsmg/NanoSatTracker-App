@@ -1,48 +1,55 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, signOut } from "@firebase/auth";
-import { useRouter } from 'expo-router';
-import { auth } from "../lib/firebaseConfig";
-
+import React, { createContext, useContext, useState } from 'react';
 
 const GlobalContext = createContext();
-export const useGlobalContext = () => useContext(GlobalContext);
 
-const GlobalProvider = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(false);
+export const useGlobalContext = () => {
+  const context = useContext(GlobalContext);
+  if (!context) {
+    throw new Error('useGlobalContext must be used within a GlobalProvider');
+  }
+  return context;
+};
+
+export const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLogged(true);
-        setUser(user);
-      } else {
-        setIsLogged(false);
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const clearError = () => {
+    setError(null);
+  };
 
   const logout = async () => {
     try {
-      await signOut(auth);
-      setIsLogged(false);
+      const { getAuthInstance } = await import('../lib/firebaseConfig');
+      const auth = await getAuthInstance();
+      await auth.signOut();
       setUser(null);
-      router.replace("/");
+      setUserInfo(null);
+      console.log('User logged out successfully');
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error('Logout error:', error);
+      setError(error.message);
     }
   };
+
+  const value = {
+    user,
+    userInfo,
+    loading,
+    error,
+    clearError,
+    logout,
+    setUser,
+    setUserInfo,
+    setLoading,
+    setError,
+  };
+
   return (
-    <GlobalContext.Provider value={{ isLogged, setIsLogged, user, setUser, loading, logout }}>
+    <GlobalContext.Provider value={value}>
       {children}
     </GlobalContext.Provider>
   );
 };
-
-export default GlobalProvider;
