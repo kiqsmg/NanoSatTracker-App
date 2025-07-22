@@ -22,7 +22,6 @@ export default function App() {
               <Image 
                 source={require('../assets/images/logo.png')}
                 style={styles.logo}
-                resizeMode="contain"
               />
             </View>
           </View>
@@ -100,22 +99,6 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginBottom: 28,
-  },
-  logoWrapper: {
-    width: 320,
-    height: 80,
-    borderRadius: 80,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#007AFF',
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 16,
-    elevation: 8,
   },
   logo: {
     width: 300,
