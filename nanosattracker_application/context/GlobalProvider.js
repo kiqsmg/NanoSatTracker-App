@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import auth from '@react-native-firebase/auth';
 
 const GlobalContext = createContext();
 
@@ -13,8 +14,32 @@ export const useGlobalContext = () => {
 export const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Listen for authentication state changes
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged((currentUser) => {
+      console.log('Auth state changed:', currentUser ? 'User logged in' : 'User logged out');
+      
+      setUser(currentUser);
+      
+      if (currentUser) {
+        setUserInfo({
+          uid: currentUser.uid,
+          email: currentUser.email,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+        });
+      } else {
+        setUserInfo(null);
+      }
+      
+      setLoading(false);
+    });
+
+    return unsubscribe; // Unsubscribe on unmount
+  }, []);
 
   const clearError = () => {
     setError(null);
@@ -22,9 +47,7 @@ export const GlobalProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const { getAuthInstance } = await import('../lib/firebaseConfig');
-      const auth = await getAuthInstance();
-      await auth.signOut();
+      await auth().signOut();
       setUser(null);
       setUserInfo(null);
       console.log('User logged out successfully');

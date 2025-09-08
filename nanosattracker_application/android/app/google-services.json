@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "596863584841",
+    "project_id": "nanosat-tracker",
+    "storage_bucket": "nanosat-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596863584841:android:YOUR_ANDROID_APP_ID",
+        "android_client_info": {
+          "package_name": "com.jsm.nanosattacker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "YOUR_OAUTH_CLIENT_ID",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoOKNkUJOGrx3fXNBJHPtOMWbRu1pJdF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "YOUR_WEB_CLIENT_ID",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

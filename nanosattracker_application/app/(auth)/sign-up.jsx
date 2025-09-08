@@ -8,7 +8,10 @@ import { Ionicons } from '@expo/vector-icons';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import { useGlobalContext } from '../../context/GlobalProvider';
-import { getAuthErrorMessage } from '../../lib/firebaseConfig';
+
+// ✅ CORRECT: Using React Native Firebase
+import auth from '@react-native-firebase/auth';
+import { getAuthErrorMessage, validateEmail, validatePassword } from '../../lib/firebaseConfig';
 
 const SignUp = () => {
   const { setUser, setUserInfo, setLoading } = useGlobalContext();
@@ -23,58 +26,66 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignUp = async () => {
-    if (!form.fullName || !form.email || !form.password || !form.confirmPassword) {
+    const fullName = form.fullName.trim();
+    const email = form.email.trim().toLowerCase();
+    const password = form.password;
+    const confirmPassword = form.confirmPassword;
+
+    // Validation
+    if (!fullName || !email || !password || !confirmPassword) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
 
-    if (form.password !== form.confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
+    if (fullName.length < 2) {
+      Alert.alert('Error', 'Full name must be at least 2 characters long');
       return;
     }
 
-    if (form.password.length < 6) {
+    if (!validateEmail(email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+
+    if (!validatePassword(password)) {
       Alert.alert('Error', 'Password must be at least 6 characters long');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match');
       return;
     }
 
     setIsSubmitting(true);
     setLoading(true);
-    
+
     try {
-      // Get auth instance (mock auth)
-      const { getAuthInstance } = await import('../../lib/firebaseConfig');
-      const auth = await getAuthInstance();
-      
-      const userCredential = await auth.createUserWithEmailAndPassword(form.email, form.password);
-      
-      // Update user profile with full name
-      await auth.updateProfile(userCredential.user, {
-        displayName: form.fullName
+      // ✅ CORRECT: Using React Native Firebase auth
+      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+
+      // Update the user's display name
+      await userCredential.user.updateProfile({
+        displayName: fullName,
       });
-      
-      // Update global state
+
       setUser(userCredential.user);
       setUserInfo({
         uid: userCredential.user.uid,
         email: userCredential.user.email,
-        displayName: form.fullName,
-        photoURL: userCredential.user.photoURL,
+        displayName: fullName,
+        photoURL: userCredential.user.photoURL || null,
       });
-      
+
       console.log('Created user:', userCredential.user);
       Alert.alert('Success', 'Account created successfully!');
-      
-      // Small delay to ensure state updates are complete
-      setTimeout(() => {
-        // Navigate to main app - go to home tab specifically
-        router.replace('/(tabs)/home');
-      }, 500);
-      
+
+      // Navigate immediately without timeout
+      router.replace('/(tabs)/home');
     } catch (error) {
       console.error('Sign up error:', error);
-      const errorMessage = error.code ? getAuthErrorMessage(error.code) : error.message;
-      Alert.alert('Error', errorMessage || 'Failed to sign up');
+      const errorMessage = getAuthErrorMessage(error.code);
+      Alert.alert('Error', errorMessage);
     } finally {
       setIsSubmitting(false);
       setLoading(false);
@@ -92,11 +103,7 @@ const SignUp = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
-      
-      <ScrollView 
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#333" />
@@ -107,11 +114,7 @@ const SignUp = () => {
 
         <View style={styles.content}>
           <View style={styles.logoContainer}>
-            <Image 
-              source={require('../../assets/images/logo.png')} 
-              style={styles.logo}
-              resizeMode="contain"
-            />
+            <Image source={require('../../assets/images/logo.png')} style={styles.logo} resizeMode="contain" />
             <Text style={styles.welcomeText}>Create Account</Text>
             <Text style={styles.subtitleText}>Sign up to get started</Text>
           </View>
@@ -124,6 +127,7 @@ const SignUp = () => {
               otherStyles={styles.input}
               placeholder="Enter your full name"
               autoCapitalize="words"
+              autoCorrect={false}
             />
 
             <FormField
@@ -134,6 +138,7 @@ const SignUp = () => {
               keyboardType="email-address"
               placeholder="Enter your email"
               autoCapitalize="none"
+              autoCorrect={false}
             />
 
             <FormField
@@ -146,11 +151,7 @@ const SignUp = () => {
               secureTextEntry={!showPassword}
               rightIcon={
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                  <Ionicons 
-                    name={showPassword ? "eye-off" : "eye"} 
-                    size={20} 
-                    color="#666" 
-                  />
+                  <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={20} color="#666" />
                 </TouchableOpacity>
               }
             />
@@ -165,11 +166,7 @@ const SignUp = () => {
               secureTextEntry={!showConfirmPassword}
               rightIcon={
                 <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-                  <Ionicons 
-                    name={showConfirmPassword ? "eye-off" : "eye"} 
-                    size={20} 
-                    color="#666" 
-                  />
+                  <Ionicons name={showConfirmPassword ? 'eye-off' : 'eye'} size={20} color="#666" />
                 </TouchableOpacity>
               }
             />
@@ -179,6 +176,7 @@ const SignUp = () => {
               handlePress={handleSignUp}
               containerStyles={styles.signUpButton}
               isLoading={isSubmitting}
+              disabled={isSubmitting}
             />
 
             <View style={styles.dividerContainer}>
@@ -199,7 +197,7 @@ const SignUp = () => {
 
             <View style={styles.footer}>
               <Text style={styles.footerText}>Already have an account? </Text>
-              <Link href="/sign-in" asChild>
+              <Link href="/(auth)/sign-in" asChild>
                 <TouchableOpacity>
                   <Text style={styles.linkText}>Sign In</Text>
                 </TouchableOpacity>
@@ -250,7 +248,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 30,
+    marginBottom: 40,
   },
   logo: {
     width: 80,
@@ -274,16 +272,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    marginBottom: 16,
+    marginBottom: 20,
   },
   signUpButton: {
     marginTop: 8,
-    marginBottom: 28,
+    marginBottom: 32,
   },
   dividerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 28,
+    marginBottom: 32,
   },
   divider: {
     flex: 1,
@@ -300,7 +298,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 20,
-    marginBottom: 30,
+    marginBottom: 40,
   },
   socialButton: {
     width: 56,

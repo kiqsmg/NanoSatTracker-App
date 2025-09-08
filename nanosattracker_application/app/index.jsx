@@ -7,6 +7,11 @@ import CustomButton from '../components/CustomButton';
 const { width, height } = Dimensions.get('window');
 
 export default function App() {
+  const handleGetStarted = () => {
+    console.log('Get Started button pressed - navigating to sign-in');
+    router.push('/(auth)/sign-in');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
@@ -67,7 +72,7 @@ export default function App() {
           <View style={styles.buttonContainer}>
             <CustomButton
               title="Get Started"
-              handlePress={() => router.push("/(auth)/sign-in")}
+              handlePress={handleGetStarted}
               containerStyles={styles.continueButton}
             />
             <Text style={styles.buttonSubtext}>
@@ -101,8 +106,8 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   logo: {
-    width: 300,
-    height: 300,
+    width: 150,
+    height: 150,
   },
   titleContainer: {
     alignItems: 'center',

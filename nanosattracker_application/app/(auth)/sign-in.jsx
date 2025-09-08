@@ -8,7 +8,10 @@ import { Ionicons } from '@expo/vector-icons';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import { useGlobalContext } from '../../context/GlobalProvider';
-import { getAuthErrorMessage } from '../../lib/firebaseConfig';
+
+import auth from '@react-native-firebase/auth';
+import { getAuthErrorMessage, validateEmail, validatePassword } from '../../lib/firebaseConfig';
+
 
 const SignIn = () => {
   const { setUser, setUserInfo, setLoading } = useGlobalContext();
@@ -20,22 +23,30 @@ const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignIn = async () => {
-    if (!form.email || !form.password) {
+    const email = form.email.trim().toLowerCase();
+    const password = form.password;
+
+    if (!email || !password) {
       Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      Alert.alert('Error', 'Password must be at least 6 characters long');
       return;
     }
 
     setIsSubmitting(true);
     setLoading(true);
-    
+
     try {
-      // Get auth instance (mock auth)
-      const { getAuthInstance } = await import('../../lib/firebaseConfig');
-      const auth = await getAuthInstance();
-      
-      const userCredential = await auth.signInWithEmailAndPassword(form.email, form.password);
-      
-      // Update global state
+      const userCredential = await auth().signInWithEmailAndPassword(email, password);
+
       setUser(userCredential.user);
       setUserInfo({
         uid: userCredential.user.uid,
@@ -43,20 +54,13 @@ const SignIn = () => {
         displayName: userCredential.user.displayName,
         photoURL: userCredential.user.photoURL,
       });
-      
-      console.log('Signed in user:', userCredential.user);
-      Alert.alert('Success', 'Signed in successfully!');
-      
-      // Small delay to ensure state updates are complete
-      setTimeout(() => {
-        // Navigate to main app - go to home tab specifically
-        router.replace('/(tabs)/home');
-      }, 500);
-      
+
+      // Navigate immediately without success alert
+      router.replace('/(tabs)/home');
     } catch (error) {
       console.error('Sign in error:', error);
-      const errorMessage = error.code ? getAuthErrorMessage(error.code) : error.message;
-      Alert.alert('Error', errorMessage || 'Failed to sign in');
+      const errorMessage = getAuthErrorMessage(error.code);
+      Alert.alert('Error', errorMessage);
     } finally {
       setIsSubmitting(false);
       setLoading(false);
@@ -74,11 +78,8 @@ const SignIn = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
-      
-      <ScrollView 
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
+
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#333" />
@@ -89,11 +90,7 @@ const SignIn = () => {
 
         <View style={styles.content}>
           <View style={styles.logoContainer}>
-            <Image 
-              source={require('../../assets/images/logo.png')} 
-              style={styles.logo}
-              resizeMode="contain"
-            />
+            <Image source={require('../../assets/images/logo.png')} style={styles.logo} resizeMode="contain" />
             <Text style={styles.welcomeText}>Welcome back!</Text>
             <Text style={styles.subtitleText}>Sign in to your account</Text>
           </View>
@@ -119,11 +116,7 @@ const SignIn = () => {
               secureTextEntry={!showPassword}
               rightIcon={
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                  <Ionicons 
-                    name={showPassword ? "eye-off" : "eye"} 
-                    size={20} 
-                    color="#666" 
-                  />
+                  <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={20} color="#666" />
                 </TouchableOpacity>
               }
             />
@@ -153,7 +146,7 @@ const SignIn = () => {
 
             <View style={styles.footer}>
               <Text style={styles.footerText}>Don't have an account? </Text>
-              <Link href="/sign-up" asChild>
+              <Link href="/(auth)/sign-up" asChild>
                 <TouchableOpacity>
                   <Text style={styles.linkText}>Sign Up</Text>
                 </TouchableOpacity>
@@ -167,6 +160,7 @@ const SignIn = () => {
 };
 
 const styles = StyleSheet.create({
+  // your existing styles unchanged
   container: {
     flex: 1,
     backgroundColor: '#fff',

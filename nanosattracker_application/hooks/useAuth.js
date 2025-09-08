@@ -1,11 +1,8 @@
+// hooks/useAuth.js
 import { useState } from 'react';
 import { Alert } from 'react-native';
-import { 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword,
-  signOut 
-} from 'firebase/auth';
-import { auth, getAuthErrorMessage, validateEmail, validatePassword, validateUsername } from '../lib/firebaseConfig';
+import auth from '@react-native-firebase/auth';
+import { getAuthErrorMessage, validateEmail, validatePassword, validateUsername } from '../lib/firebaseConfig';
 
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +22,7 @@ export const useAuth = () => {
 
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await auth().signInWithEmailAndPassword(email, password);
       return userCredential.user;
     } catch (error) {
       const errorMessage = getAuthErrorMessage(error.code);
@@ -59,7 +56,7 @@ export const useAuth = () => {
 
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await auth().createUserWithEmailAndPassword(email, password);
       return userCredential.user;
     } catch (error) {
       const errorMessage = getAuthErrorMessage(error.code);
@@ -72,7 +69,7 @@ export const useAuth = () => {
   const logout = async () => {
     setLoading(true);
     try {
-      await signOut(auth);
+      await auth().signOut();
     } catch (error) {
       const errorMessage = getAuthErrorMessage(error.code);
       throw new Error(errorMessage);
@@ -93,4 +90,4 @@ export const useAuth = () => {
     loading,
     handleAuthError
   };
-}; 
+};

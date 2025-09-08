@@ -10,13 +10,22 @@ const FormField = ({
   otherStyles,
   error,
   rightIcon,
+  isValid,
   ...props
 }) => {
+  const showValidation = value && value.length > 0;
+  const isSuccess = showValidation && isValid && !error;
+  const isError = showValidation && (error || isValid === false);
+
   return (
     <View style={[styles.container, otherStyles]}>
       <Text style={styles.title}>{title}</Text>
 
-      <View style={[styles.inputContainer, error && styles.inputError]}>
+      <View style={[
+        styles.inputContainer, 
+        isError && styles.inputError,
+        isSuccess && styles.inputSuccess
+      ]}>
         <TextInput
           style={styles.input}
           value={value}
@@ -26,11 +35,19 @@ const FormField = ({
           {...props}
         />
 
-        {rightIcon && (
-          <View style={styles.rightIcon}>
-            {rightIcon}
-          </View>
-        )}
+        <View style={styles.rightIconsContainer}>
+          {isSuccess && (
+            <Ionicons name="checkmark-circle" size={20} color="#22C55E" />
+          )}
+          {isError && !rightIcon && (
+            <Ionicons name="alert-circle" size={20} color="#FF6B6B" />
+          )}
+          {rightIcon && (
+            <View style={styles.rightIcon}>
+              {rightIcon}
+            </View>
+          )}
+        </View>
       </View>
       
       {error && (
@@ -64,12 +81,22 @@ const styles = StyleSheet.create({
   },
   inputError: {
     borderColor: '#FF6B6B',
+    backgroundColor: '#FFF5F5',
+  },
+  inputSuccess: {
+    borderColor: '#22C55E',
+    backgroundColor: '#F0FDF4',
   },
   input: {
     flex: 1,
     fontSize: 16,
     color: '#333',
     fontWeight: '400',
+  },
+  rightIconsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   rightIcon: {
     marginLeft: 8,
