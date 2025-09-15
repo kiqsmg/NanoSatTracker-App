@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity, Alert, ScrollView, StyleSheet, Image } fr
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useGlobalContext } from '../../context/GlobalProvider';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../lib/firebaseConfig';
+import auth from '@react-native-firebase/auth';
 import { router } from 'expo-router';
 
 const Profile = () => {
